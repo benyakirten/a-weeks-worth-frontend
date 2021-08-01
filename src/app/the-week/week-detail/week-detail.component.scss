@@ -28,8 +28,10 @@
       margin: $size-small;
 
       .mode-buttons {
-        display: flex;
-        flex-direction: column;
+        @include respond(tab-port) {
+          display: flex;
+          flex-direction: column;
+        }
       }
     }
 

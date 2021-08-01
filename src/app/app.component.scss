@@ -2,7 +2,7 @@
 
 main {
   margin: 4rem 6rem;
-  min-height: 76vh;
+  min-height: 100vh;
 
   @include respond(tab-port) {
     margin: 2rem 1rem;
