@@ -5,6 +5,10 @@
   align-items: center;
   justify-content: space-between;
 
+  @include respond(tab-port) {
+    flex-direction: column;
+  }
+
   border-bottom: 2px solid $color-gray-dark-3;
   margin: $vertical-small;
 }

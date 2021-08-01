@@ -27,7 +27,6 @@
         </app-error-display>
       </div>
       <div
-        [style.width]="myRequests.length > 0 ? '60%' : '40%'"
         class="card"
         [@card]
         *ngIf="!loadingMyGroups && myGroups.length < 1"
@@ -39,7 +38,6 @@
       </div>
       <div class="my-groups" *ngIf="!loadingMyGroups && myGroups.length > 0">
         <div
-          [style.width]="myRequests.length > 0 ? '60%' : '40%'"
           class="card"
           [@card]
           *ngFor="let group of myGroups"
@@ -144,12 +142,18 @@
             />
             <label for="create">New Group Name</label>
           </div>
-          <app-button
-            type="submit"
-            margin="1rem 0"
-            [disabled]="!f.valid || loadingMutations || nameAlreadyInUse(f.value['create'])"
-            >Create Group
-          </app-button>
+          <div class="button">
+            <app-button
+              type="submit"
+              margin="1rem 0"
+              [disabled]="
+                !f.valid ||
+                loadingMutations ||
+                nameAlreadyInUse(f.value['create'])
+              "
+              >Create Group
+            </app-button>
+          </div>
         </form>
       </div>
       <div class="all-groups" *ngIf="filteredAllGroups.length > 0">
@@ -160,11 +164,21 @@
               <app-button
                 margin="0 1rem"
                 [warn]="alreadyRequestedAccess(group.id) ? true : false"
-                (click)="alreadyRequestedAccess(group.id) ? cancelRequest(group.id) : requestAccess(group.id, group.name)"
+                (click)="
+                  alreadyRequestedAccess(group.id)
+                    ? cancelRequest(group.id)
+                    : requestAccess(group.id, group.name)
+                "
                 [disabled]="loadingMutations"
               >
-                <span *ngIf="!loadingMutations && !alreadyRequestedAccess(group.id)">Request Access</span>
-                <span *ngIf="!loadingMutations && alreadyRequestedAccess(group.id)">Cancel Request</span>
+                <span
+                  *ngIf="!loadingMutations && !alreadyRequestedAccess(group.id)"
+                  >Request Access</span
+                >
+                <span
+                  *ngIf="!loadingMutations && alreadyRequestedAccess(group.id)"
+                  >Cancel Request</span
+                >
                 <app-loading *ngIf="loadingMutations"></app-loading>
               </app-button>
             </div>

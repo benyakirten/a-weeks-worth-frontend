@@ -11,6 +11,10 @@
       margin: $vertical-small;
       width: 50%;
 
+      @include respond(phone) {
+        width: 100%;
+      }
+
       article {
         h3 {
           border-bottom: 1px solid $color-gray-dark-3;
@@ -54,6 +58,11 @@
       left: 55%;
       width: 40%;
       margin: 0 auto;
+
+      @include respond(phone) {
+        display: none;
+        width: 0%;
+      }
       ol {
         font-size: $font-size-medium;
         margin-left: 2rem;

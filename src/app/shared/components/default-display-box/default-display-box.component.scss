@@ -1,8 +1,12 @@
-@import "src/scss/variables";
+@import "src/scss/abstracts";
 
 ol {
   font-size: $font-size-medium;
   margin-left: 2rem;
+
+  @include respond(phone) {
+    margin-left: 3rem;
+  }
   li {
     &:first-child {
       margin-top: 1rem;

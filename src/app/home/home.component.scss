@@ -1,8 +1,13 @@
-@import "../../scss/variables";
+@import "src/scss/abstracts";
 
 article {
   display: flex;
   justify-content: space-between;
+
+  @include respond(phone) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 
   section {
     .hero-text {
@@ -31,6 +36,10 @@ article {
   .illustration {
     img {
       height: 60rem;
+
+      @include respond(tab-port) {
+        height: 30rem;
+      }
     }
   }
 }

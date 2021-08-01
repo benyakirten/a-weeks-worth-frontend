@@ -6,6 +6,10 @@ article {
   display: flex;
   justify-content: space-between;
 
+  @include respond(tab-port) {
+    flex-direction: column-reverse;
+  }
+
   h1 {
     text-align: center;
 
@@ -13,6 +17,11 @@ article {
 
     padding-bottom: 1rem;
     margin-bottom: 2rem;
+
+    @include respond(phone) {
+      padding-bottom: 0;
+      margin-bottom: 1rem;
+    }
   }
 
   .recipe-buttons {
@@ -23,9 +32,16 @@ article {
 
   .half {
     width: 50%;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
     padding: $horizontal-medium;
     &--first {
       border-right: 1px solid $color-gray-dark-3;
+      @include respond(tab-port) {
+        border-right: none;
+      }
     }
     &--second {
       position: relative;

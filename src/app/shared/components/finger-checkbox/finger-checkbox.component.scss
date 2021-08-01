@@ -37,15 +37,25 @@
 
           position: absolute;
           left: 50%;
-          top: 55%;
+          top: 20%;
 
           color: $color-primary-dark-2;
           font-size: $font-size-xl;
+
+          @include respond(tab-port) {
+            font-size: increase($font-size-xl, .2);
+          }
+
           font-weight: bold;
 
           transition: all 0.4s;
           transform: translate(-50%, -50%) scale(0.2);
           opacity: 0;
+
+          @supports (-webkit-box-reflect: above) {
+            top: 55%;
+            transform: translate(-50%, -20%) scale(0.2);
+          }
       }
   }
   input {

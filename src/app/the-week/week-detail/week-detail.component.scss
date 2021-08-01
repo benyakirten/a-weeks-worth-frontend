@@ -26,6 +26,11 @@
       display: flex;
       border-bottom: 1px solid $color-black;
       margin: $size-small;
+
+      .mode-buttons {
+        display: flex;
+        flex-direction: column;
+      }
     }
 
     &__content {

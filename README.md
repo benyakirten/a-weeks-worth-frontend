@@ -21,9 +21,11 @@ Anyway, to get to how it works, sign up for an account on /auth. Then go to grou
 Oh yeah, you can send me a message that sends me an email if you're logged in by going to the about page and scrolling to the bottom.
 
 ## Planned changes
+* Write a better readme that details classes vs types, enums, animations, queries, services and my design decisions
 * Add unit testing
 * Add e2e testing
-* Add media queries for UI
+* Improve queries
 
 ## Changelong
 7/31/2021: First upload
+8/1/2021: Add rudimentary media queries
