@@ -1,0 +1,73 @@
+<div class="container">
+  <app-error-display *ngIf="error">
+    {{ error }}
+  </app-error-display>
+  <div class="name">
+    <div class="name__display">
+      <h3>{{ name }}</h3>
+    </div>
+    <div class="title__button">
+      <app-button [disabled]="!name" (click)="editWeek()" width="10rem">
+        Edit
+      </app-button>
+    </div>
+  </div>
+  <div class="shopping-list">
+    <h5>Shopping List</h5>
+    <ul>
+      <li *ngFor="let item of shoppingList">
+        <p>{{ item.quantity }} {{ item.unit }} of {{ item.name }}</p>
+      </li>
+    </ul>
+  </div>
+  <div class="meals">
+    <div class="form-title">
+      <h2>See meals by day</h2>
+      <div class="mode-buttons">
+        <button
+          *ngFor="let day of weekdayKey"
+          [class.active]="dayFilter === day"
+          (click)="setDayFilter(day)"
+        >
+          {{ weekday(day) }}
+        </button>
+      </div>
+    </div>
+    <div class="meals__content">
+      <div
+        class="meals__content__day"
+        *ngIf="filteredMeals.length > 0; else noFilteredMeals"
+      >
+        <ul>
+          <li *ngFor="let meal of filteredMeals">
+            <h5>Meal for {{ mealtime(meal.time) }}:</h5>
+            <div *ngIf="meal.recipe">
+              <span>Recipe:&nbsp;
+                <a [routerLink]="['/recipes', meal.recipe.id]">
+                  {{ meal.recipe.name }}
+                </a>
+              </span>
+            </div>
+            <div *ngIf="meal.text">
+              <span>
+                Direction: {{ meal.text }}
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <ng-template #noFilteredMeals>
+        <div class="meals__content__no-meal">
+          <h4>No meals for {{ weekday(dayFilter) }}</h4>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<app-default-modal
+  [id]="modalId"
+  (close)="closeModal()"
+  [title]="modalTitle"
+  [text]="modalText"
+  [top]="modalTop"
+></app-default-modal>

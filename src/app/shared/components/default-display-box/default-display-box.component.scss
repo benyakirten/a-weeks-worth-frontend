@@ -1,0 +1,14 @@
+@import "src/scss/variables";
+
+ol {
+  font-size: $font-size-medium;
+  margin-left: 2rem;
+  li {
+    &:first-child {
+      margin-top: 1rem;
+    }
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+}

@@ -1,0 +1,140 @@
+@import './variables';
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+/* DEFINE REM */
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: $sans-serif;
+  background-color: $color-eggshell;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.horizontal {
+  display: flex;
+  width: 100%;
+  background-color: red;
+  border: 1px solid black;
+  box-shadow: $shadow-medium;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $serif;
+}
+
+h1 {
+  font-size: $font-size-xxl;
+}
+h2,
+h3 {
+  font-size: $font-size-xl;
+}
+h4,
+h5{
+  font-size: $font-size-large;
+}
+
+h6 {
+  font-size: $font-size-medium;
+}
+
+p {
+  font-size: $font-size-medium;
+}
+
+ul {
+  list-style: none;
+}
+
+.control-group {
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  label {
+    position: absolute;
+    top: 2.5rem;
+    left: 2.2rem;
+    font-size: $font-size-medium;
+
+    transition: $transition-normal;
+  }
+  input {
+    width: 40rem;
+
+    font-size: $font-size-medium;
+    padding: 1.5rem 1rem;
+    margin: 1rem;
+
+    &:hover + label,
+    &:focus + label,
+    &:not(:placeholder-shown) + label {
+      font-size: $font-size-small;
+      top: 1rem;
+      left: 2.2rem;
+    }
+  }
+}
+
+.mode-buttons {
+  margin: 0;
+  button {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    margin: 0;
+
+    border: 2px solid $color-gray-medium-3;
+    border-bottom: none;
+
+    font-size: $font-size-large;
+    color: $color-black;
+    background-color: $color-eggshell;
+
+    transition: $transition-normal;
+
+    &:first-child {
+      border-right: none;
+    }
+
+    &:last-child {
+      border-left: none;
+    }
+  }
+  .active {
+    cursor: inherit;
+    background-color: $color-black;
+    color: $color-eggshell;
+  }
+}
+
+.form-title {
+  width: 100%;
+  margin-left: 3rem;
+
+  display: flex;
+  align-items: center;
+
+  h2 {
+    margin-right: 15%;
+  }
+}

@@ -1,0 +1,28 @@
+<header>
+  <nav>
+    <ul class="left">
+        <li>
+          <a routerLink="/">
+            <img src="/assets/images/Logo.svg" alt="Logo" />
+          </a>
+        </li>
+    </ul>
+    <ul class="center">
+      <li><a routerLink="/recipes">Recipes</a></li>
+      <li *ngIf="loggedIn"><a routerLink="/the-week">The Week</a></li>
+      <li *ngIf="loggedIn"><a routerLink="/groups">Groups</a></li>
+    </ul>
+    <ul class="right">
+      <li><a routerLink="/account" *ngIf="loggedIn">Account</a></li>
+      <li>
+        <a routerLink="/auth" *ngIf="!loggedIn">Login/Register</a>
+        <span
+          (click)="logout()"
+          class="link"
+          role="button"
+          *ngIf="loggedIn"
+        >Logout</span>
+      </li>
+    </ul>
+  </nav>
+</header>

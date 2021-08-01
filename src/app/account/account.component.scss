@@ -1,0 +1,55 @@
+@import "src/scss/abstracts";
+
+.container {
+  .form-title {
+    border-bottom: 1px solid $color-black;
+    margin: $size-small;
+  }
+
+  .verified {
+    .submit {
+      margin-left: 1rem;
+    }
+    .body {
+      display: flex;
+      .form {
+        width: 50%;
+        &__buttons {
+          margin-left: 1rem;
+          display: flex;
+          &__button {
+            &:not(:last-child) {
+              margin-right: 1rem;
+            }
+          }
+        }
+      }
+      .display-box {
+        width: 50%;
+      }
+    }
+
+  }
+
+  .not-verified {
+    p {
+      margin-left: 1rem;
+      margin-bottom: 2rem;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      form {
+        display: inline-flex;
+      }
+      .control-group {
+        transform: translateY(-5px);
+      }
+      .button {
+        :first-child {
+          margin: $horizontal-small;
+        }
+      }
+    }
+  }
+}

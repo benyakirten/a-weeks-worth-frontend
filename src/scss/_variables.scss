@@ -1,0 +1,96 @@
+// *** COLORS ***
+$color-black: #000;
+$color-white: #fff;
+$color-eggshell: #f1eae4;
+$color-error: #ff4d6d;
+
+// GRAY COLORS
+$color-gray-light-1: #f8f9faff;
+$color-gray-light-2: #e9ecefff;
+$color-gray-light-3: #dee2e6ff;
+$color-gray-medium-1: #ced4daff;
+$color-gray-medium-2: #adb5bdff;
+$color-gray-medium-3: #6c757dff;
+$color-gray-dark-1: #495057ff;
+$color-gray-dark-2: #343a40ff;
+$color-gray-dark-3: #212529ff;
+
+// CRAY GRADIENTS
+$gray-gradient-top: linear-gradient(0deg, #f8f9faff, #e9ecefff, #dee2e6ff, #ced4daff, #adb5bdff, #6c757dff, #495057ff, #343a40ff, #212529ff);
+$gray-gradient-right: linear-gradient(90deg, #f8f9faff, #e9ecefff, #dee2e6ff, #ced4daff, #adb5bdff, #6c757dff, #495057ff, #343a40ff, #212529ff);
+$gray-gradient-bottom: linear-gradient(180deg, #f8f9faff, #e9ecefff, #dee2e6ff, #ced4daff, #adb5bdff, #6c757dff, #495057ff, #343a40ff, #212529ff);
+$gray-gradient-left: linear-gradient(270deg, #f8f9faff, #e9ecefff, #dee2e6ff, #ced4daff, #adb5bdff, #6c757dff, #495057ff, #343a40ff, #212529ff);
+$gray-gradient-top-right: linear-gradient(45deg, #f8f9faff, #e9ecefff, #dee2e6ff, #ced4daff, #adb5bdff, #6c757dff, #495057ff, #343a40ff, #212529ff);
+$gray-gradient-bottom-right: linear-gradient(135deg, #f8f9faff, #e9ecefff, #dee2e6ff, #ced4daff, #adb5bdff, #6c757dff, #495057ff, #343a40ff, #212529ff);
+$gray-gradient-top-left: linear-gradient(225deg, #f8f9faff, #e9ecefff, #dee2e6ff, #ced4daff, #adb5bdff, #6c757dff, #495057ff, #343a40ff, #212529ff);
+$gray-gradient-bottom-left: linear-gradient(315deg, #f8f9faff, #e9ecefff, #dee2e6ff, #ced4daff, #adb5bdff, #6c757dff, #495057ff, #343a40ff, #212529ff);
+$gray-gradient-radial: radial-gradient(#f8f9faff, #e9ecefff, #dee2e6ff, #ced4daff, #adb5bdff, #6c757dff, #495057ff, #343a40ff, #212529ff);
+
+// PRIMARY COLORS
+$color-primary-light-1: #d8f3dc;
+$color-primary-light-2: #b7e4c7;
+$color-primary-light-3: #95d5b2;
+$color-primary-medium-1: #74c69d;
+$color-primary-medium-2: #52b788;
+$color-primary-medium-3: #40916c;
+$color-primary-dark-1: #2d6a4f;
+$color-primary-dark-2: #1b4332;
+$color-primary-dark-3: #081c15;
+
+// PRIMARY GRADIENTS
+$primary-gradient-top: linear-gradient(0deg, #d8f3dcff, #b7e4c7ff, #95d5b2ff, #74c69dff, #52b788ff, #40916cff, #2d6a4fff, #1b4332ff, #081c15ff);
+$primary-gradient-right: linear-gradient(90deg, #d8f3dcff, #b7e4c7ff, #95d5b2ff, #74c69dff, #52b788ff, #40916cff, #2d6a4fff, #1b4332ff, #081c15ff);
+$primary-gradient-bottom: linear-gradient(180deg, #d8f3dcff, #b7e4c7ff, #95d5b2ff, #74c69dff, #52b788ff, #40916cff, #2d6a4fff, #1b4332ff, #081c15ff);
+$primary-gradient-left: linear-gradient(270deg, #d8f3dcff, #b7e4c7ff, #95d5b2ff, #74c69dff, #52b788ff, #40916cff, #2d6a4fff, #1b4332ff, #081c15ff);
+$primary-gradient-top-right: linear-gradient(45deg, #d8f3dcff, #b7e4c7ff, #95d5b2ff, #74c69dff, #52b788ff, #40916cff, #2d6a4fff, #1b4332ff, #081c15ff);
+$primary-gradient-bottom-right: linear-gradient(135deg, #d8f3dcff, #b7e4c7ff, #95d5b2ff, #74c69dff, #52b788ff, #40916cff, #2d6a4fff, #1b4332ff, #081c15ff);
+$primary-gradient-top-left: linear-gradient(225deg, #d8f3dcff, #b7e4c7ff, #95d5b2ff, #74c69dff, #52b788ff, #40916cff, #2d6a4fff, #1b4332ff, #081c15ff);
+$primary-gradient-bottom-left: linear-gradient(315deg, #d8f3dcff, #b7e4c7ff, #95d5b2ff, #74c69dff, #52b788ff, #40916cff, #2d6a4fff, #1b4332ff, #081c15ff);
+$primary-gradient-radial: radial-gradient(#d8f3dcff, #b7e4c7ff, #95d5b2ff, #74c69dff, #52b788ff, #40916cff, #2d6a4fff, #1b4332ff, #081c15ff);
+
+// *** FONTS ***
+
+// FONT-SIZES
+$font-size-xxl: 6rem;
+$font-size-xl: 3rem;
+$font-size-large: 2.4rem;
+$font-size-medium: 1.8rem;
+$font-size-small: 1.2rem;
+$font-size-xs: 0.6rem;
+
+// FAMILIES
+$serif: 'Bona Nova', serif;
+$sans-serif: 'Assistant', sans-serif;
+
+// *** MARGINS AND PADDINGS ***
+$size-large: 4rem 8rem;
+$size-medium: 2.5rem 4rem;
+$size-small: 2rem 1rem;
+
+$horizontal-large: 0 6rem;
+$horizontal-medium: 0 4rem;
+$horizontal-small: 0 2rem;
+
+$vertical-large: 6rem 0;
+$vertical-medium: 4rem 0;
+$vertical-small: 2rem 0;
+$vertical-xs: 0.5rem 0;
+
+// *** BOX-SHADOWS ***
+$shadow-large: 2px 2px 8px 6px rgba($color-black, 0.4);
+$shadow-medium: 2px 2px 4px 4px rgba($color-black, 0.4);
+$shadow-small: 2px 2px 2px 2px rgba($color-black, 0.4);
+$shadow-xs: 1px 1px 1px 1px rgba($color-black, 0.4);
+
+// *** TRANSITIONS ***
+$transition-xslow: all .8s;
+$transition-slow: all .6s;
+$transition-normal: all .4s;
+$transition-fast: all .2s;
+
+// *** Z-INDEX ***
+$lowered: -1;
+$flat: 0;
+$raised: 1;
+$higher: 10;
+$popup: 100;

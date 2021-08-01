@@ -1,0 +1,36 @@
+@import "../../scss/variables";
+
+article {
+  display: flex;
+  justify-content: space-between;
+
+  section {
+    .hero-text {
+      opacity: 0;
+      animation: fade-in 2s 0.5s forwards;
+      h1 {
+        font-size: $font-size-xxl;
+      }
+      p {
+        margin: $vertical-medium;
+        font-size: $font-size-large;
+      }
+    }
+    .hero-explanation {
+      opacity: 0;
+      animation: fade-in 2s 1.5s forwards;
+      h3 {
+        font-size: $font-size-xl;
+      }
+      p {
+        margin: $vertical-medium;
+        font-size: $font-size-large;
+      }
+    }
+  }
+  .illustration {
+    img {
+      height: 60rem;
+    }
+  }
+}

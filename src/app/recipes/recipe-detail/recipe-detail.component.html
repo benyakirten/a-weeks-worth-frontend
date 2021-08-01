@@ -1,0 +1,80 @@
+<div class="error" *ngIf="error">
+  <h3>{{ error }}</h3>
+  <p>
+    Please try checking the recipe ID and/or reloading.
+    If the problem persists, please contact Ben.
+  </p>
+</div>
+<div class="loading" *ngIf="!error && loading">
+  <app-loading></app-loading>
+</div>
+<div class="container" *ngIf="!error && !loading && recipe">
+  <div class="title">
+    <h1>{{ recipe.name }}</h1>
+  </div>
+  <div class="recipe-image">
+    <div class="hide-image">
+      <app-button (click)="toggleShowPhoto()">{{ showPhoto ? 'Hide' : 'Show' }} Photo</app-button>
+    </div>
+    <app-photo-card
+      [image]="recipe.photo"
+      [caption]="recipe.name"
+      [showPhoto]="showPhoto"
+    ></app-photo-card>
+  </div>
+  <ol class="ingredients">
+    <h2>
+      Ingredients:
+    </h2>
+    <li *ngFor="let ingredient of recipe.ingredients">
+      {{ ingredient.quantity }} {{ ingredient.unit }} of {{ ingredient.name }}
+    </li>
+  </ol>
+  <ol class="steps">
+    <h2>
+      Preparation:
+    </h2>
+    <li *ngFor="let step of recipe.steps">
+      {{ step.step }}
+    </li>
+  </ol>
+  <div
+    class="menu"
+    (click)="toggleMenuClicked()"
+    (mouseenter)="toggleMenuHovered()"
+    (mouseleave)="toggleMenuHovered()"
+    (keypress)="ariaButtonListener($event)"
+    role="menu"
+    *ngIf="isLoggedIn"
+    tabindex="0"
+  >
+    <div
+      class="menu__top"
+      [class.inverted]="showMenuHovered || showMenuClicked"
+    >
+      <h3 >Show Options</h3>
+    </div>
+    <ul [@submenu] class="menu__children" *ngIf="showMenuHovered || showMenuClicked">
+      <li>
+        <button (click)="editRecipe()" attr.aria-hidden="!(showMenuHovered || showMenuClicked)">
+          <h3>Edit Recipe</h3>
+        </button>
+      </li>
+      <li>
+        <button (click)="deleteRecipe()" attr.aria-hidden="!(showMenuHovered || showMenuClicked)">
+          <h3>Delete Recipe</h3>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="norecipe" *ngIf="!loading && !recipe">
+  <h3>An error has occurred! Please try to select another recipe. If the problem persists, please contact me.</h3>
+</div>
+<app-default-modal
+  [id]="modalId"
+  (close)="closeModal()"
+  [title]="modalTitle"
+  [text]="modalText"
+  [top]="modalTop"
+></app-default-modal>

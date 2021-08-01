@@ -1,0 +1,144 @@
+<div class="container">
+  <div class="form-title">
+    <h2>Account Settings</h2>
+    <div class="mode-buttons">
+      <button (click)="passwordMode ? togglePasswordMode() : null" [class.active]="!passwordMode">Account Details</button>
+      <button (click)="passwordMode ? null : togglePasswordMode()" [class.active]="passwordMode">Change Password</button>
+    </div>
+  </div>
+  <app-error-display *ngIf="error">
+    {{ error }}
+  </app-error-display>
+  <div class="verified" *ngIf="verified; else notVerified">
+    <div class="body">
+      <form class="form" (ngSubmit)="onSubmit(fDetails)" #fDetails="ngForm">
+        <div class="control-group" *ngIf="!passwordMode" [@input]>
+          <input
+            type="email"
+            placeholder=" "
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+          />
+          <label for="email">Email</label>
+        </div>
+        <div class="control-group" *ngIf="!passwordMode" [@input]>
+          <input
+            type="text"
+            placeholder=" "
+            id="username"
+            name="username"
+            [(ngModel)]="username"
+          />
+          <label for="username">Username</label>
+        </div>
+        <div class="control-group" *ngIf="passwordMode" [@input]>
+          <input
+            type="text"
+            placeholder=" "
+            id="token"
+            name="token"
+            [(ngModel)]="passwordResetToken"
+            required
+          />
+          <label for="token">Token</label>
+          <app-button (click)="sendPasswordResetEmail()">
+            Send Token Email
+          </app-button>
+        </div>
+        <div class="control-group" *ngIf="passwordMode" [@input]>
+          <input
+            type="password"
+            placeholder=" "
+            id="password"
+            name="password"
+            ngModel
+            required
+            minlength="8"
+          />
+          <label for="password">Password</label>
+        </div>
+        <div class="control-group" *ngIf="passwordMode" [@input]>
+          <input
+            type="password"
+            placeholder=" "
+            id="password2"
+            name="password2"
+            ngModel
+            required
+            minlength="8"
+          />
+          <label for="password2">Repeat Password</label>
+        </div>
+        <div class="form__buttons">
+          <div class="form__buttons__button">
+            <app-button
+              type="submit"
+              [disabled]="loading ||
+                fDetails.pristine ||
+                !fDetails.valid ||
+                (passwordMode && fDetails.value['password'] !== fDetails.value['password2'])"
+            >
+              <app-loading *ngIf="loading"></app-loading>
+              {{ loading ? null : 'Submit' }}
+            </app-button>
+          </div>
+          <div class="form__buttons__button">
+            <app-button type="button" [disabled]="loading" (click)="togglePasswordMode()">
+              <app-loading *ngIf="loading"></app-loading>
+              <span *ngIf="!loading">Switch to {{ passwordMode ? 'Account Details' : 'Change Password' }}</span>
+            </app-button>
+          </div>
+        </div>
+      </form>
+      <div class="display-box">
+        <app-default-display-box
+          [headline]="passwordMode ? 'Rules to Change Your Password' : 'Rules to Change Account Details'"
+          [rules]="passwordMode ? changePasswordRules : accountDetailsRules"
+        ></app-default-display-box>
+      </div>
+    </div>
+  </div>
+  <ng-template #notVerified>
+    <div class="not-verified">
+      <p>
+        Before you can make any modifications to your account name, password or username,
+        your email address must be verified. You can either manually enter the token
+        or click on the link sent in the email.
+      </p>
+      <div class="row">
+        <form (ngSubmit)="onSubmit(fVerify)" #fVerify="ngForm" class="form" [@input]>
+          <div class="control-group">
+            <input
+              type="text"
+              placeholder=" "
+              id="token"
+              name="token"
+              ngModel
+              minlength="111"
+              [required]="!verified"
+              autofocus
+            />
+            <label for="token">Token</label>
+          </div>
+          <div class="button">
+            <app-button type="submit" [disabled]="loading || !fVerify.valid">
+              <app-loading *ngIf="loading"></app-loading>
+              {{ loading ? null : 'Submit token' }}
+            </app-button>
+          </div>
+          <div class="button">
+            <app-button
+              type="button"
+              (click)="resendActivationEmail()"
+              [disabled]="loading"
+            >
+              <app-loading *ngIf="loading"></app-loading>
+              {{ loading ? null : 'Send new verification email' }}
+            </app-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+</div>

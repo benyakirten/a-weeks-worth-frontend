@@ -1,0 +1,209 @@
+<article>
+  <app-error-display *ngIf="error">
+    {{ error }}
+  </app-error-display>
+  <div class="loading" *ngIf="!error && loading">
+    <app-loading></app-loading>
+  </div>
+  <div *ngIf="!error && !loading">
+    <form class="form" [formGroup]="weekForm" (ngSubmit)="onSubmit()">
+      <div class="name">
+        <div class="name__display">
+          <h3>{{ name }}</h3>
+        </div>
+      </div>
+      <section class="shopping-list" formArrayName="shoppingList">
+        <div class="shopping-list__head">
+          <div class="shopping-list__head__title">
+            <h4>Shopping List</h4>
+          </div>
+          <div class="shopping-list__head__add">
+            <app-button type="button" (click)="addShoppingItem()">
+              Add Shopping List Item
+            </app-button>
+            <app-button type="button" (click)="addRecipeIngredientsToShoppingList()" margin="0 1rem">
+              Add Week's Ingredients to Shopping List
+            </app-button>
+            <app-button type="button" (click)="consolidateShoppingList()">
+              Consolidate Shopping List
+            </app-button>
+          </div>
+        </div>
+        <ul>
+          <li
+            class="form__group__controls"
+            *ngFor="
+              let shoppingItemControl of shoppingListControls;
+              let i = index
+            "
+            [formGroupName]="i"
+            [@list]
+          >
+            <div class="form__group__controls__row">
+              <div class="control-group">
+                <input
+                  type="text"
+                  placeholder=" "
+                  [id]="'shopping-list-name-' + i"
+                  [name]="'shopping-list-name-' + i"
+                  formControlName="name"
+                />
+                <label [for]="'shopping-list-name-' + i">Name</label>
+              </div>
+              <div class="control-group">
+                <input
+                  type="text"
+                  placeholder=" "
+                  [id]="'shopping-list-quantity-' + i"
+                  [name]="'shopping-list-quantity-' + i"
+                  formControlName="quantity"
+                />
+                <label [for]="'shopping-list-quantity-' + i">Quantity</label>
+              </div>
+              <div class="control-group">
+                <input
+                  type="text"
+                  placeholder=" "
+                  [id]="'shopping-list-unit-' + i"
+                  [name]="'shopping-list-unit-' + i"
+                  formControlName="unit"
+                />
+                <label [for]="'shopping-list-unit-' + i">Unit</label>
+              </div>
+              <button type="button" (click)="removeShoppingItem(i)">
+                Remove Item
+              </button>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section class="meals" formArrayName="meals">
+        <div class="meals__title">
+          <h4>Meals</h4>
+          <div class="meals__title__buttons">
+            <app-button
+              type="button"
+              (click)="addMeal()"
+              [disabled]="mutationLoading"
+              margin="0 2rem"
+            >
+              Add meal
+            </app-button>
+          </div>
+        </div>
+        <div class="meals__content">
+          <ul>
+            <li
+              *ngFor="let mealControl of mealsControls; let i = index"
+              [formGroupName]="i"
+              [@list]
+            >
+              <div class="meals__row">
+                <div class="meals__content__control-group">
+                  <label for="'meal-weekday' + i">Day of the week:</label>
+                  <select
+                    [id]="'meal-weekday' + i"
+                    [name]="'meal-weekday' + i"
+                    formControlName="day"
+                  >
+                    <option *ngFor="let key of weekdayKey" [ngValue]="key">
+                      {{ weekday(key) }}
+                    </option>
+                  </select>
+                </div>
+                <div class="meals__content__control-group">
+                  <label for="'meal-time' + i">Meal time</label>
+                  <select
+                    [id]="'meal-time' + i"
+                    [name]="'meal-time' + i"
+                    formControlName="time"
+                  >
+                    <option *ngFor="let key of timeKey" [ngValue]="key">
+                      {{ mealtime(key) }}
+                    </option>
+                  </select>
+                </div>
+                <div class="meals__content__control-group">
+                  <label for="'meal-recipe' + i">Recipe:</label>
+                  <select
+                    [id]="'meal-recipe' + i"
+                    [name]="'meal-recipe' + i"
+                    formControlName="recipeId"
+                  >
+                    <option [ngValue]="null">Select Recipe (Leave here for no recipe)</option>
+                    <option *ngFor="let recipe of recipes" [ngValue]="recipe.id">
+                      {{ recipe.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="meals__row">
+                <div class="meals__content__control-group">
+                  <label [for]="'meal-text-' + i">Meal Instructions:</label>
+                  <textarea
+                    cols="50"
+                    rows="4"
+                    placeholder="Turn the oven on to 350 degrees"
+                    [id]="'meal-text-' + i"
+                    [value]="'meal-text-' + i"
+                    formControlName="text"
+                  ></textarea>
+                </div>
+                <div class="meals__content__remove-meal">
+                  <app-button
+                    type="button"
+                    (click)="removeMeal(i)"
+                    [disabled]="mutationLoading"
+                  >
+                    Remove Meal
+                  </app-button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="form__buttons">
+        <app-button
+          type="submit"
+          [disabled]="!weekForm.valid || !!error || mutationLoading || !daysAndTimesUnique"
+          width="8rem"
+        >
+          Submit
+        </app-button>
+        <app-button
+          type="button"
+          [routerLink]="['/the-week', groupId]"
+          width="8rem"
+          margin="2rem 0"
+        >
+          Cancel
+        </app-button>
+      </div>
+      <div class="form__submit">
+        <app-button
+          type="submit"
+          [disabled]="!weekForm.valid || !!error || mutationLoading || !daysAndTimesUnique"
+          width="8rem"
+        >
+          Submit
+        </app-button>
+        <app-button
+          type="button"
+          [routerLink]="['/the-week', groupId]"
+          width="8rem"
+          margin="0 2rem"
+        >
+          Cancel
+        </app-button>
+      </div>
+    </form>
+  </div>
+</article>
+<app-default-modal
+  [id]="modalId"
+  (close)="closeModal()"
+  [title]="modalTitle"
+  [text]="modalText"
+  [top]="modalTop"
+></app-default-modal>

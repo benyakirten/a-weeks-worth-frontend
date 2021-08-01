@@ -1,0 +1,10 @@
+@import 'src/scss/abstracts';
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 2px solid $color-gray-dark-3;
+  margin: $vertical-small;
+}

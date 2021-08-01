@@ -1,0 +1,24 @@
+@import 'src/scss/variables';
+
+li {
+  cursor: pointer;
+
+  margin: $vertical-small;
+  position: relative;
+
+  .text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: $color-white;
+    h3 {
+      text-transform: uppercase;
+      padding: 1rem;
+
+      background-image: linear-gradient(
+        rgba($color-primary-light-1, 0.5),
+        rgba($color-primary-dark-3, 0.5)
+      );
+    }
+  }
+}

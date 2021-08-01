@@ -1,0 +1,9 @@
+@import "src/scss/abstracts";
+
+.error {
+  padding: 1rem 2rem;
+  margin: 2rem 1rem;
+  width: 40rem;
+  background-color: rgba($color-error, 0.7);
+  border: 1px solid $color-gray-dark-2;
+}

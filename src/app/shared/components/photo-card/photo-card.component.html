@@ -1,0 +1,8 @@
+<app-card [showCard]="showPhoto" attr.aria-hidden="!showPhoto">
+  <img
+    [src]="image"
+    [alt]="caption"
+    onerror="this.onerror=null;this.src='/assets/images/Bicchiere.svg'"
+  >
+  <ng-content></ng-content>
+</app-card>

@@ -1,0 +1,5 @@
+<div class="modal-background" (click)="close()"></div>
+<div class="modal" [style.top]="top + 200 + 'px'">
+  <button class="modal__close" (click)="close()">&times;</button>
+  <ng-content></ng-content>
+</div>

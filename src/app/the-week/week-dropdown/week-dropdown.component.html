@@ -1,0 +1,18 @@
+<div class="container">
+  <h3>Choose a group</h3>
+  <app-loading *ngIf="loading"></app-loading>
+  <select *ngIf="!loading" (change)="changeGroup($event)">
+    <option value="">Choose week to view</option>
+    <option value="my-week">{{ username }}'s week</option>
+    <option *ngFor="let group of groupsSummary" [value]="group.id">
+      {{ group.name }}
+    </option>
+  </select>
+</div>
+<app-default-modal
+  [id]="modalId"
+  (close)="closeModal()"
+  [title]="modalTitle"
+  [text]="modalText"
+  [top]="modalTop"
+></app-default-modal>

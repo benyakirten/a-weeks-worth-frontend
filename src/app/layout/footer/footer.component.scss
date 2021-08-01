@@ -1,0 +1,47 @@
+@import 'src/scss/variables';
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: $color-gray-dark-2;
+  margin-top: 4rem;
+  height: 4rem;
+  width: 100%;
+
+  box-shadow: 0 -2px 2px 2px rgba($color-black, 0.4);
+
+  ul {
+    display: flex;
+    list-style: none;
+
+    li {
+      &:not(:last-child) {
+        margin-right: 2rem;
+      }
+
+      a,
+      a:link,
+      a:visited {
+        text-decoration: none;
+
+        color: $color-gray-light-1;
+        font-size: $font-size-small;
+        font-family: $serif;
+
+        transition: $transition-normal;
+        opacity: 0.8;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  .small-text {
+    margin-right: 2rem;
+    color: $color-gray-light-2;
+    font-size: 0.8rem;
+  }
+}

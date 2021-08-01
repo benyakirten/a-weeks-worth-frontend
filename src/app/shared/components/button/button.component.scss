@@ -1,0 +1,62 @@
+@import "src/scss/abstracts";
+
+button {
+  cursor: pointer;
+
+  padding: 1.5rem 1rem;
+  border: 1px solid $color-gray-medium-3;
+
+  color: $color-primary-light-1;
+  font-size: $font-size-medium;
+  transition: $transition-normal;
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $color-gray-light-2;
+    color: $color-primary-dark-2;
+
+    &:hover {
+      background-color: $color-gray-light-2;
+      color: $color-primary-dark-2;
+
+      transform: translateY(0);
+      box-shadow: 0 2px 2px 0 rgba($color-primary-dark-3, 0.4);
+    }
+  }
+}
+
+.default {
+  background-color: $color-primary-dark-1;
+  box-shadow: 0 2px 2px 0 rgba($color-primary-dark-3, 0.4);
+
+  &:hover {
+    background-color: $color-primary-medium-3;
+    box-shadow: 0 5px 5px 0 rgba($color-primary-dark-3, 0.4);
+
+    transform: translateY(-3px);
+  }
+  &:active {
+    background-color: $color-primary-medium-2;
+    box-shadow: 0 2px 2px 0 rgba($color-primary-dark-3, 0.4);
+
+    transform: translateY(-1px);
+  }
+}
+
+.warn {
+  background-color: lighten($color-error, 6%);
+  box-shadow: 0 2px 2px 0 rgba($color-primary-dark-3, 0.4);
+
+  &:hover {
+    background-color: $color-error;
+    box-shadow: 0 5px 5px 0 rgba($color-primary-dark-3, 0.4);
+
+    transform: translateY(-3px);
+  }
+  &:active {
+    background-color: lighten($color-error, 3%);
+    box-shadow: 0 2px 2px 0 rgba($color-primary-dark-3, 0.4);
+
+    transform: translateY(-1px);
+  }
+}

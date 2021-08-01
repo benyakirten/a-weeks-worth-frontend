@@ -1,0 +1,68 @@
+@import 'src/scss/variables';
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: $size-small;
+
+  background-image: linear-gradient(
+    to right,
+    $color-primary-light-2 10%,
+    rgba($color-primary-medium-1, 0.7) 15%,
+    $color-primary-light-3 50%,
+    rgba($color-primary-medium-1, 0.7) 75%,
+    $color-primary-light-2 90%,
+  );
+  border-bottom: 2px solid $color-primary-medium-1;
+  box-shadow: $shadow-medium;
+  ul {
+    display: flex;
+    list-style: none;
+
+    li {
+      margin-left: 2rem;
+
+      img {
+        height: 4rem;
+        width: 4rem;
+
+        // animation: change color
+      }
+
+      a,
+      a:link,
+      a:visited,
+      span {
+        cursor: pointer;
+
+        font-family: $serif;
+        font-size: $font-size-medium;
+        letter-spacing: 1px;
+        text-decoration: none;
+
+        color: $color-gray-dark-2;
+        opacity: 0.85;
+
+        transition: $transition-normal;
+
+        &:hover {
+          text-decoration: underline;
+          color: $color-gray-dark-3;
+          letter-spacing: 2px;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.center {
+  margin-left: 14rem;
+}
+
+.right {
+  margin-right: 8rem;
+}

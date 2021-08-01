@@ -1,0 +1,26 @@
+@import 'src/scss/abstracts';
+
+.loading {
+  margin-right: 3rem;
+}
+
+ul {
+  @include centered-column;
+  padding: $horizontal-large;
+
+  list-style: none;
+  overflow: auto;
+}
+
+.no-recipes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  color: $color-primary-dark-1;
+
+  h4 {
+    margin: $vertical-medium;
+  }
+}

@@ -1,0 +1,34 @@
+@import 'src/scss/abstracts';
+
+article {
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+
+  h1 {
+    text-align: center;
+
+    border-bottom: 1px solid $color-black;
+
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .recipe-buttons {
+    display: flex;
+    justify-content: center;
+    margin: $vertical-small;
+  }
+
+  .half {
+    width: 50%;
+    padding: $horizontal-medium;
+    &--first {
+      border-right: 1px solid $color-gray-dark-3;
+    }
+    &--second {
+      position: relative;
+    }
+  }
+}

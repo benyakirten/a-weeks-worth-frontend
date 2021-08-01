@@ -1,0 +1,13 @@
+<app-modal [id]="id" [top]="top">
+  <div class="container">
+    <h2>{{ title }}</h2>
+    <div class="row">
+      <div class="text">
+        <p>{{ text }}</p>
+      </div>
+      <div class="button">
+        <app-button (click)="close.emit()">{{ buttonCaption }}</app-button>
+      </div>
+    </div>
+  </div>
+</app-modal>

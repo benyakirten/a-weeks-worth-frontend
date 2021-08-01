@@ -1,0 +1,97 @@
+<article>
+  <div class="form-title">
+    <h2>
+      <span>Login or Register</span>
+      <app-default-hover-toolbar width="35rem">
+        Switch between the two modes by clicking to the right
+        or the button at the bottom labeled 'I need to...'
+      </app-default-hover-toolbar>
+    </h2>
+    <div class="mode-buttons">
+      <button (click)="loginMode ? null : alternateMode()" [class.active]="loginMode">Login</button>
+      <button (click)="loginMode ? alternateMode() : null" [class.active]="!loginMode">Register</button>
+    </div>
+  </div>
+  <div class="body">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <app-error-display *ngIf="error">
+        {{ error }}
+      </app-error-display>
+      <div class="control-group">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder=" "
+          ngModel
+          required
+          email
+          autofocus
+        />
+        <label for="email">Email</label>
+      </div>
+      <div class="control-group" *ngIf="!loginMode" [@input]>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder=" "
+          ngModel
+          minlength="6"
+          [required]="!loginMode"
+        />
+        <label for="username">Username</label>
+      </div>
+      <div class="control-group">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder=" "
+          ngModel
+          required
+          minlength="8"
+        />
+        <label for="password">Password</label>
+      </div>
+      <div class="control-group" *ngIf="!loginMode" [@input]>
+        <input
+          type="password"
+          id="password2"
+          name="password2"
+          placeholder=" "
+          ngModel
+          [required]="!loginMode"
+          minlength="8"
+        />
+        <label for="password2">Confirm Password</label>
+      </div>
+      <div class="buttons">
+        <app-button
+          type="submit"
+          [disabled]="loading || !f.valid || (!loginMode && f.form.value['password'] !== f.form.value['password2'])"
+          [padding]="loading ? '1.25rem 2rem' : '1.5rem 3rem'"
+        >
+          <div class="loading" *ngIf="loading" >
+            <app-loading size="2.5rem"></app-loading>
+          </div>
+          {{ loading ? '' : 'Submit' }}
+        </app-button>
+        <app-button
+          type="button"
+          padding="1.5rem 3rem"
+          (click)="alternateMode()"
+        >
+          I need to {{ loginMode ? 'register' : 'login' }} instead
+        </app-button>
+      </div>
+    </form>
+    <div class="display-box">
+      <app-default-display-box
+        *ngIf="!loginMode"
+        headline="To create an account:"
+        [rules]="rules"
+      ></app-default-display-box>
+    </div>
+  </div>
+</article>

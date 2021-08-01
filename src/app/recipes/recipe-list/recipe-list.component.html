@@ -1,0 +1,24 @@
+<div class="center">
+  <div class="loading" *ngIf="loading">
+    <app-loading></app-loading>
+  </div>
+  <ul *ngIf="!loading && recipes && recipes.length > 0">
+    <app-recipe-item
+      *ngFor="let recipe of recipes"
+      [recipe]="recipe"
+      [@recipes]
+    ></app-recipe-item>
+  </ul>
+  <app-card *ngIf="!loading && recipes && recipes.length === 0">
+    <div class="no-recipes">
+      <div>
+        <h4>
+          There are no recipes available yet.
+        </h4>
+        <p>
+          Please create a recipe to see it displayed in the list.
+        </p>
+      </div>
+    </div>
+  </app-card>
+</div>

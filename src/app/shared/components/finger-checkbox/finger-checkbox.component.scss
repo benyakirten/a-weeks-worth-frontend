@@ -1,0 +1,59 @@
+@import 'src/scss/abstracts';
+
+.checkbox {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  input:checked + label::after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+  }
+
+  label {
+      position: relative;
+      width: 3.8rem;
+      height: 2rem;
+
+      background-color: $color-white;
+      outline: 3px solid $color-gray-dark-3;
+      cursor: pointer;
+
+      box-shadow: $shadow-small;
+
+      transition: $transition-normal;
+
+      &:hover {
+          transform: scale(1.05);
+      }
+
+      &:active {
+          transform: scale(1.02);
+      }
+
+      &::after {
+          content: "\261E";
+
+          position: absolute;
+          left: 50%;
+          top: 55%;
+
+          color: $color-primary-dark-2;
+          font-size: $font-size-xl;
+          font-weight: bold;
+
+          transition: all 0.4s;
+          transform: translate(-50%, -50%) scale(0.2);
+          opacity: 0;
+      }
+  }
+  input {
+      display: none;
+      position: relative;
+  }
+  span {
+      margin-left: 1rem;
+      cursor: pointer;
+  }
+}

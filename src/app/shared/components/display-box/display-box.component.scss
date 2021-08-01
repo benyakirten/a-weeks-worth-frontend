@@ -1,0 +1,10 @@
+@import "src/scss/variables";
+
+.container {
+  margin: $vertical-medium;
+  padding: 2rem;
+
+  background-color: $color-gray-light-1;
+  border: 1px solid $color-gray-dark-2;
+  box-shadow: $shadow-small;
+}

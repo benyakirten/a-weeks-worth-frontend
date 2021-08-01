@@ -1,0 +1,7 @@
+@function reduce($size, $amount) {
+  @return $size / (1 + $amount);
+}
+
+@function increase($size, $amount) {
+  @return $size * (1 + $amount);
+}

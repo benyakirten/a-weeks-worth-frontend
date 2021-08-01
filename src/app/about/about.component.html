@@ -1,0 +1,95 @@
+<div class="container">
+  <h1>About</h1>
+  <div class="flex">
+    <div class="left">
+      <article #why>
+        <h3>Why does this site exist?</h3>
+        <p>
+          The idea of this website is that you and/or your family can organize
+          your week's meals and shopping in one place. I guess it's in the place
+          of having a whiteboard in the kitchen in something. This way you can
+          consume precious resources like electricity, computing resources or
+          bandwith on this website instead of, like, writing things down
+          physically? With your own hand? Gross. I guess it can do some nifty
+          things like tabulate different ingredients together. It also exists so
+          I could practice what I'd learned about Django, GraphQL and Angular.
+        </p>
+      </article>
+      <article #how>
+        <h3>How do I use this site?</h3>
+        <p>
+          Sign up for an account under Login/Register. Then you can get started
+          under The Week. If you want, you can join a group/make one/request
+          entry to one and coordinate with other people. You can join in an
+          unlimited number of groups, though I have no idea why you'd want to.
+          You can use r2api to translate select recipes from Italian to English,
+          too. I'll update this when I've designed all those parts.
+        </p>
+      </article>
+      <article #who>
+        <h3>Who am I?</h3>
+        <p>
+          My name is Benyakir Horowitz. I am a writer and editor who has spent
+          the last year learning programming. You can check out
+          <a href="https://benyakir-edits.com">my blog</a> or
+          <a href="https://github.com/benyakirten/">my Github</a> to learn more
+          about me and what I do. Or you can write me a message using the boxes
+          below. It sends an email to my personal email account. Cool, eh?
+        </p>
+      </article>
+      <article #cred>
+        <h3>Photo Credit</h3>
+        <p>
+          The beautiful illustration of flowers that I used for the front page
+          was made by Johan Teyler (1648-1709). Original from Rijks Museum.
+        </p>
+      </article>
+      <article #messageMe>
+        <form *ngIf="loggedIn" (ngSubmit)="onSubmit(f)" #f="ngForm">
+          <div class="message-me">
+            <div class="row">
+              <label for="message">Your message:</label>
+              <app-error-display *ngIf="result" [success]="messageGood">
+                {{ result }}
+              </app-error-display>
+            </div>
+            <textarea
+              rows="10"
+              id="message"
+              name="message"
+              placeholder="Your website is just the best."
+              required
+              ngModel
+            ></textarea>
+            <app-button type="submit" [disabled]="!f.valid || loading">
+              <span *ngIf="!loading">Send</span>
+              <app-loading *ngIf="loading"></app-loading>
+            </app-button>
+          </div>
+        </form>
+      </article>
+    </div>
+    <div class="right">
+      <app-display-box>
+        <h4>Table Of Contents</h4>
+        <ol>
+          <li (click)="scroll(why)">
+            <span class="link" role="link">Why should I use this site?</span>
+          </li>
+          <li (click)="scroll(how)">
+            <span class="link" role="link">How do I use this site?</span>
+          </li>
+          <li (click)="scroll(who)">
+            <span class="link" role="link">Who am I?</span>
+          </li>
+          <li (click)="scroll(cred)">
+            <span class="link" role="link">Photo Credit</span>
+          </li>
+          <li (click)="scroll(messageMe)" *ngIf="loggedIn">
+            <span class="link" role="link">Send me a message</span>
+          </li>
+        </ol>
+      </app-display-box>
+    </div>
+  </div>
+</div>

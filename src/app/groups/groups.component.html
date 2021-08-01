@@ -1,0 +1,190 @@
+<div class="container">
+  <div class="title">
+    <h2>Groups</h2>
+    <div class="mode-buttons">
+      <button
+        (click)="joinMode ? toggleJoinMode() : null"
+        [class.active]="!joinMode"
+      >
+        My Groups
+      </button>
+      <button
+        (click)="joinMode ? null : toggleJoinMode()"
+        [class.active]="joinMode"
+      >
+        Other Groups
+      </button>
+    </div>
+  </div>
+  <section *ngIf="!joinMode">
+    <div class="body">
+      <div class="loading" *ngIf="loadingMyGroups">
+        <app-loading size="10rem"></app-loading>
+      </div>
+      <div class="error">
+        <app-error-display *ngIf="error">
+          {{ error }}
+        </app-error-display>
+      </div>
+      <div
+        [style.width]="myRequests.length > 0 ? '60%' : '40%'"
+        class="card"
+        [@card]
+        *ngIf="!loadingMyGroups && myGroups.length < 1"
+      >
+        <h3>
+          It looks like you're not in any groups. Click on Other Groups then
+          make a new group or ask to join one.
+        </h3>
+      </div>
+      <div class="my-groups" *ngIf="!loadingMyGroups && myGroups.length > 0">
+        <div
+          [style.width]="myRequests.length > 0 ? '60%' : '40%'"
+          class="card"
+          [@card]
+          *ngFor="let group of myGroups"
+        >
+          <div class="card__name">
+            <h3>{{ group.name }}</h3>
+            <div class="card__name__buttons">
+              <app-button
+                margin="0 1rem"
+                (click)="leaveGroup(group.id)"
+                [disabled]="loadingMutations"
+              >
+                <span *ngIf="!loadingMutations">Leave Group</span>
+                <app-loading *ngIf="loadingMutations"></app-loading>
+              </app-button>
+              <app-button
+                [warn]="true"
+                (click)="deleteGroup(group.id)"
+                [disabled]="loadingMutations"
+              >
+                <span *ngIf="!loadingMutations">Delete Group</span>
+                <app-loading *ngIf="loadingMutations"></app-loading>
+              </app-button>
+            </div>
+          </div>
+          <h5>Members:</h5>
+          <ul>
+            <li *ngFor="let member of group.members">{{ member }}</li>
+          </ul>
+          <div *ngIf="group.requests && group.requests.length > 0">
+            <h5>Requests for access:</h5>
+            <ul>
+              <li *ngFor="let request of group.requests">
+                <p>{{ request.name }}</p>
+                <app-button
+                  margin="1rem 0"
+                  (click)="acceptRequest(request.id, group.id, request.name)"
+                  [disabled]="loadingMutations"
+                >
+                  <span *ngIf="!loadingMutations">Accept Request</span>
+                  <app-loading *ngIf="loadingMutations"></app-loading>
+                </app-button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div
+        class="my-requests"
+        *ngIf="!loadingMyGroups && myRequests.length > 0"
+      >
+        <h3>My Requests:</h3>
+        <ul>
+          <li *ngFor="let request of myRequests">
+            <p>
+              {{ request.name }}
+            </p>
+            <app-button
+              margin="1rem 0"
+              [disabled]="loadingMutations"
+              (click)="cancelRequest(request.id)"
+            >
+              <span *ngIf="!loadingMutations">Cancel Request</span>
+              <app-loading *ngIf="loadingMutations"></app-loading>
+            </app-button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section *ngIf="joinMode">
+    <div class="loading" *ngIf="loadingGroups">
+      <app-loading size="10rem"></app-loading>
+    </div>
+    <div class="error">
+      <app-error-display *ngIf="error">
+        {{ error }}
+      </app-error-display>
+    </div>
+    <div class="other-groups" *ngIf="!loadingGroups">
+      <div class="search">
+        <div class="control-group">
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder=" "
+            [ngModel]="searchFilter"
+            (ngModelChange)="searchAllGroups($event)"
+          />
+          <label for="search">Search</label>
+        </div>
+        <form #f="ngForm" (ngSubmit)="createGroup(f)">
+          <div class="control-group">
+            <input
+              type="text"
+              id="create"
+              name="create"
+              placeholder=" "
+              required
+              ngModel
+            />
+            <label for="create">New Group Name</label>
+          </div>
+          <app-button
+            type="submit"
+            margin="1rem 0"
+            [disabled]="!f.valid || loadingMutations || nameAlreadyInUse(f.value['create'])"
+            >Create Group
+          </app-button>
+        </form>
+      </div>
+      <div class="all-groups" *ngIf="filteredAllGroups.length > 0">
+        <div class="card" [@card] *ngFor="let group of filteredAllGroups">
+          <div class="card__name">
+            <h3>{{ group.name }}</h3>
+            <div class="card__name__buttons" *ngIf="notMember(group.id)">
+              <app-button
+                margin="0 1rem"
+                [warn]="alreadyRequestedAccess(group.id) ? true : false"
+                (click)="alreadyRequestedAccess(group.id) ? cancelRequest(group.id) : requestAccess(group.id, group.name)"
+                [disabled]="loadingMutations"
+              >
+                <span *ngIf="!loadingMutations && !alreadyRequestedAccess(group.id)">Request Access</span>
+                <span *ngIf="!loadingMutations && alreadyRequestedAccess(group.id)">Cancel Request</span>
+                <app-loading *ngIf="loadingMutations"></app-loading>
+              </app-button>
+            </div>
+          </div>
+          <h5>Members:</h5>
+          <ul>
+            <li *ngFor="let member of group.members">{{ member }}</li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="card"
+        [@card]
+        *ngIf="!loadingGroups && filteredAllGroups.length === 0"
+      >
+        <h3>
+          It looks like you're not in any groups. Click on Other Groups then
+          make a new group or ask to join one.
+        </h3>
+      </div>
+    </div>
+  </section>
+</div>

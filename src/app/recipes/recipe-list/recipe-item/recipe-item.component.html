@@ -1,0 +1,10 @@
+<li [routerLink]="recipe.id" role="link">
+  <app-photo-card
+    [image]="recipe.photo"
+    [caption]="recipe.name"
+  >
+    <div class="text">
+      <h3>{{ recipe?.name }}</h3>
+    </div>
+  </app-photo-card>
+</li>

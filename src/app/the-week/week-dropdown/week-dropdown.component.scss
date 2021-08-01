@@ -1,0 +1,15 @@
+@import 'src/scss/abstracts';
+
+.container {
+  display: flex;
+  align-items: baseline;
+  h3 {
+    margin-right: 2rem;
+  }
+  select {
+    font-size: $font-size-medium;
+    padding: 2rem 1rem;
+
+    width: 20rem;
+  }
+}

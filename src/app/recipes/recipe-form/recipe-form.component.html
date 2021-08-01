@@ -1,0 +1,199 @@
+<article>
+  <div class="error" *ngIf="error">
+    <h3>{{ error }}</h3>
+    <p>
+      Please try checking the recipe ID and/or reloading.
+      If the problem persists, please contact Ben.
+    </p>
+  </div>
+  <div class="loading" *ngIf="!error && loading">
+    <app-loading></app-loading>
+  </div>
+  <div *ngIf="!error && !loading">
+    <form class="form" [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="form__buttons">
+        <div>
+          <app-button
+            [disabled]="!recipeForm.valid && !recipeForm.touched"
+            type="submit"
+            width="10rem"
+          >
+            Save
+          </app-button>
+        </div>
+        <div>
+          <app-button
+            *ngIf="!!recipe"
+            (click)="onDelete()"
+            type="button"
+            width="10rem"
+          >
+            Delete
+          </app-button>
+        </div>
+        <div>
+          <app-button (click)="navigateAway()" type="button" width="10rem">
+            Cancel
+          </app-button>
+        </div>
+      </div>
+      <section class="form__group">
+        <div class="form__group__controls">
+          <label for="name">Name*:</label>
+          <input
+            class="wide-input"
+            type="text"
+            id="name"
+            placeholder="Cordon Bleu"
+            formControlName="name"
+          />
+        </div>
+        <div class="form__group__controls" *ngIf="!recipe">
+          <label for="url">URL:</label>
+          <input
+            class="wide-input"
+            type="text"
+            id="url"
+            placeholder="https://ricette.giallozafferano.it/Pancake-all-avena.html"
+            formControlName="url"
+          />
+        </div>
+        <div class="form__group__controls">
+          <label for="photo">Photo (URL):</label>
+          <input
+            class="wide-input"
+            type="text"
+            id="photo"
+            placeholder="https://hello.com/my-cool-img.jpg"
+            formControlName="photo"
+          />
+        </div>
+        <div class="recipe-image">
+          <div
+            class="recipe-image__button"
+            [style.margin-bottom]="showPhoto ? '2rem' : '0'"
+          >
+            <app-button (click)="toggleShowPhoto()">
+              {{ showPhoto ? "Hide" : "Show" }} Photo
+            </app-button>
+          </div>
+          <app-photo-card
+            [showPhoto]="showPhoto"
+            [image]="recipeForm.value['photo']"
+            [caption]="recipeForm.value['name']"
+          ></app-photo-card>
+        </div>
+      </section>
+      <section
+        class="form__group form__group--ingredients"
+        formArrayName="ingredients"
+      >
+        <div class="form__group--ingredients__title">Ingredients*:</div>
+        <div class="form__group--ingredients__labels">
+          <label
+            for="ingredient-name-control"
+            id="ingredients-name-label"
+            class="form__group--ingredients__labels__label"
+          >
+            Name*
+          </label>
+          <label
+            for="ingredient-quantity-control"
+            id="ingredients-quantity-label"
+            class="form__group--ingredients__labels__label"
+          >
+            Quantity*
+          </label>
+          <label
+            for="ingredient-unit-control"
+            id="ingredients-unit-label"
+            class="form__group--ingredients__labels__label"
+          >
+            Unit*
+          </label>
+        </div>
+        <ul>
+          <li
+            class="form__group__controls"
+            *ngFor="let ingredientControl of ingredientControls; let i = index"
+            [formGroupName]="i"
+            [@list]
+          >
+            <div>
+              <input
+                type="text"
+                placeholder="Kumquat"
+                id="ingredient-name-control"
+                aria-labelledby="ingredients-name-label"
+                formControlName="name"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="1/4"
+                id="ingredient-quantity-control"
+                aria-labelledby="ingredient-quantity-label"
+                formControlName="quantity"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="Hogshead"
+                id="ingredient-unit-control"
+                aria-labelledby="ingredients-unit-label"
+                formControlName="unit"
+              />
+            </div>
+            <div>
+              <button type="button" (click)="onSubtractIngredient(i)">
+                &minus;
+              </button>
+            </div>
+          </li>
+        </ul>
+        <div class="add-ingredient">
+          <app-button (click)="onAddIngredient()" type="button">
+            Add Ingredient
+          </app-button>
+        </div>
+      </section>
+      <section class="form__group form__group--steps" formArrayName="steps">
+        <div class="form__group--steps__labels">
+          <label id="steps-label">Steps*:</label>
+        </div>
+        <ul>
+          <li
+            class="form__group__controls form__group__controls--steps"
+            *ngFor="let stepControl of stepControls; let i = index"
+            [formGroupName]="i"
+            [@list]
+          >
+            <textarea
+              cols="50"
+              rows="4"
+              placeholder="Turn the oven on to 350 degrees"
+              aria-labelledby="steps-label"
+              formControlName="step"
+            ></textarea>
+            <div class="delete-step">
+              <app-button (click)="onSubtractStep(i)">Remove Step</app-button>
+            </div>
+          </li>
+        </ul>
+        <app-button (click)="onAddStep()" type="button">Add Step</app-button>
+      </section>
+    </form>
+    <div class="explanation">
+      <p>* denotes a required field</p>
+    </div>
+  </div>
+</article>
+<app-default-modal
+  [id]="modalId"
+  (close)="closeModal()"
+  [title]="modalTitle"
+  [text]="modalText"
+  [top]="modalTop"
+></app-default-modal>

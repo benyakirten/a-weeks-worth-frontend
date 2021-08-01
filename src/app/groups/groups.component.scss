@@ -1,0 +1,99 @@
+@import "src/scss/abstracts";
+
+.container {
+  .title {
+    display: flex;
+    border-bottom: 1px solid $color-gray-dark-3;
+    .mode-buttons {
+      margin-left: 5%;
+    }
+  }
+
+  .loading {
+    margin: 10rem auto;
+  }
+  .error {
+    margin-left: 3rem;
+  }
+
+  .body {
+    display: flex;
+    position: relative;
+    .my-groups {
+      flex: 2;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .my-requests {
+      flex: 1;
+
+      position: fixed;
+      right: 4rem;
+      width: 30%;
+
+      margin: $vertical-small;
+      padding: $size-small;
+
+      background-color: $color-gray-light-1;
+      border: 2px solid $color-gray-dark-2;
+      box-shadow: $shadow-small;
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-top: 2rem;
+        font-size: $font-size-medium;
+      }
+    }
+  }
+  .card {
+    margin: $size-medium;
+    padding: $size-small;
+
+    box-shadow: $shadow-small;
+    background-color: $color-gray-light-1;
+    border: 2px solid $color-gray-dark-2;
+
+    &__name {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      border-bottom: 1px solid $color-black;
+      margin-bottom: 1rem;
+
+      &__buttons {
+        margin: 1rem 0;
+      }
+    }
+    h5 {
+      margin: $vertical-small;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      font-size: $font-size-medium;
+    }
+  }
+  .search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem 3rem;
+
+    border-bottom: 2px solid $color-gray-dark-3;
+    form {
+      display: flex;
+    }
+  }
+  .all-groups {
+    display: flex;
+    flex-wrap: wrap;
+    .card {
+      width: 40%;
+    }
+  }
+}

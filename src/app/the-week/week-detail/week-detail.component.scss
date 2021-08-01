@@ -1,0 +1,62 @@
+@import "src/scss/abstracts";
+
+.container {
+  .name {
+    display: flex;
+    align-items: center;
+    &__display {
+      margin-right: 2rem;
+    }
+  }
+
+  .shopping-list {
+    margin: $size-small;
+    ul {
+      margin-left: 2rem;
+      list-style: circle;
+
+      li {
+        margin: $vertical-xs;
+      }
+    }
+  }
+
+  .meals {
+    .form-title {
+      display: flex;
+      border-bottom: 1px solid $color-black;
+      margin: $size-small;
+    }
+
+    &__content {
+      margin-left: 1rem;
+      background-color: lighten($color-eggshell, 5%);
+      box-shadow: $shadow-small;
+      padding: 1rem 2rem;
+      &__day {
+        ul {
+          li {
+            margin: $vertical-small;
+            span {
+              font-size: $font-size-medium;
+              a,
+              a:link,
+              a:visited {
+                text-decoration: none;
+                color: $color-primary-dark-1;
+
+                opacity: 0.8;
+                transition: $transition-normal;
+
+                &:hover {
+                  text-decoration: underline;
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

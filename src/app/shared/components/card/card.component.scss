@@ -1,0 +1,28 @@
+@import 'src/scss/variables';
+
+.card {
+  position: relative;
+
+  height: 25rem;
+  width: 40rem;
+  padding: 2rem;
+
+  background-color: $color-gray-light-3;
+  box-shadow: $shadow-medium;
+
+  transform-origin: top;
+
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+  }
+}

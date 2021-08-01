@@ -1,0 +1,30 @@
+@import 'src/scss/variables';
+
+span {
+  cursor: context-menu;
+  position: relative;
+
+  border-radius: 50%;
+  border: 1px solid $color-black;
+
+  margin: 1rem;
+
+  div {
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+
+    border: 3px solid $color-black;
+    background-color: $color-gray-light-1;
+
+    z-index: $raised;
+
+    transition: $transition-fast;
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+
+  &:hover > div {
+    transform: scaleY(1);
+  }
+}

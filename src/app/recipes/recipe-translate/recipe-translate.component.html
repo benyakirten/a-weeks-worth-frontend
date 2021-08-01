@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>
+    Translate a recipe
+    <app-default-hover-toolbar width="25rem">
+      Using the r2api package, translate one of a few select recipes from
+      Italian to English. The button will only become active for a website that
+      looks like it's capable of being processed by the translator. To get an
+      idea of what things are available, check out the dropdown on
+      <a noopener target="blank" href="https://g-f-benyakir.herokuapp.com"
+        >this website
+      </a>
+    </app-default-hover-toolbar>
+  </h2>
+  <app-error-display *ngIf="error">{{ error }}</app-error-display>
+  <div class="control-group">
+    <input
+      type="text"
+      id="url"
+      name="url"
+      placeholder=" "
+      required
+      ngModel
+      (ngModelChange)="checkEligibility($event)"
+    />
+    <label for="url">Recipe URL</label>
+  </div>
+  <div class="move-right">
+    <div class="more-right">
+      <finger-checkbox
+        id="test-test"
+        [checked]="convertUnits"
+        (click)="toggleConvertUnits()"
+      >
+        {{ convertUnits ? 'Do Convert Units' : 'Don\'t Convert Units' }}
+        <app-default-hover-toolbar width="25rem">
+          Choose whether to automatically convert the units from metric to imperial
+        </app-default-hover-toolbar>
+      </finger-checkbox>
+    </div>
+    <app-button
+      type="button"
+      margin="1rem 0"
+      [disabled]="!convertableUrl || loading"
+      (click)="onSubmit()"
+    >
+      <span *ngIf="!loading">Translate</span>
+      <app-loading *ngIf="loading"></app-loading>
+    </app-button>
+  </div>
+</div>

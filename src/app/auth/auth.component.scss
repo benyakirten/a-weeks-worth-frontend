@@ -1,0 +1,37 @@
+@import "src/scss/abstracts";
+
+article {
+  position: relative;
+
+  .body {
+    display: flex;
+    border-top: 1px solid $color-black;
+
+    form {
+      width: 50%;
+
+      position: relative;
+      padding: 2rem;
+
+      .error {
+        padding: 1rem 2rem;
+        margin: 2rem 1rem;
+        width: 40rem;
+        background-color: rgba($color-error, 0.7);
+        border: 1px solid $color-gray-dark-2;
+      }
+    }
+    .buttons {
+      display: flex;
+      margin: 1rem;
+
+      .loading {
+        @include centered-column;
+      }
+
+      :first-child {
+        margin-right: 4rem;
+      }
+    }
+  }
+}

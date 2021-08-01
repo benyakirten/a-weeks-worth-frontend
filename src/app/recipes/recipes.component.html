@@ -1,0 +1,16 @@
+<article>
+  <div class="half half--first">
+    <h1>All Recipes</h1>
+    <div class="recipe-buttons" *ngIf="loggedIn">
+      <app-button [routerLink]="['/recipes', 'new']">New Recipe</app-button>
+      <app-button
+        margin="0 3rem"
+        [routerLink]="['/recipes', 'translate']"
+      >Translate Recipe</app-button>
+    </div>
+    <app-recipe-list></app-recipe-list>
+  </div>
+  <div class="half half--second">
+    <router-outlet></router-outlet>
+  </div>
+</article>
