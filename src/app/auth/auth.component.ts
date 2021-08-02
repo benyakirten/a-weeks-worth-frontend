@@ -24,7 +24,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   loginMode: boolean = true;
   returnRoute?: string;
-  mutationSubscription?: Subscription;
+
+  email: string = '';
+
+  private mutationSubscription?: Subscription;
+
   rules: Array<string> = [
     'All fields must be filled out',
     'Email and username must be at least 6 characters',

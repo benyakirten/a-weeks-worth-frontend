@@ -1,4 +1,4 @@
-@import './abstracts';
+@import "./abstracts";
 
 *,
 *::after,
@@ -52,7 +52,7 @@ h3 {
   font-size: $font-size-xl;
 }
 h4,
-h5{
+h5 {
   font-size: $font-size-large;
 }
 
@@ -62,6 +62,9 @@ h6 {
 
 p {
   font-size: $font-size-medium;
+  @include respond(tab-port) {
+    width: 80%;
+  }
 }
 
 ul {

@@ -25,7 +25,11 @@ export class RecipesGuard implements CanActivateChild {
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (childRoute.routeConfig!.path === ':id' || childRoute.routeConfig!.path === '') {
+    if (
+      childRoute.routeConfig!.path === ':id' ||
+      childRoute.routeConfig!.path === '' ||
+      localStorage.getItem('AWW_token')
+    ) {
       return true;
     }
     return this.authService.isLoggedIn.pipe(

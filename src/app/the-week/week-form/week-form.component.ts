@@ -329,8 +329,6 @@ export class WeekFormComponent implements OnInit, OnDestroy {
     const shoppingList = this.weekForm.value['shoppingList'];
     const meals: Array<MealInputType> = (<Array<Meal>>this.weekForm.value['meals']).map
       (m => ({ ...m, time: Time[m.time].toUpperCase(), day: Day[m.day].toUpperCase() }));
-    console.log(shoppingList);
-    console.log(meals);
     if (this.groupId === 'my-week') {
       this.mutationSubscription?.unsubscribe();
       this.mutationSubscription = this.weekService

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="form-title">
     <h2>Account Settings</h2>
-    <div class="mode-buttons">
+    <div class="mode-buttons" *ngIf="verified">
       <button (click)="passwordMode ? togglePasswordMode() : null" [class.active]="!passwordMode">Account Details</button>
       <button (click)="passwordMode ? null : togglePasswordMode()" [class.active]="passwordMode">Change Password</button>
     </div>
@@ -107,7 +107,7 @@
         or click on the link sent in the email.
       </p>
       <div class="row">
-        <form (ngSubmit)="onSubmit(fVerify)" #fVerify="ngForm" class="form" [@input]>
+        <form (ngSubmit)="onSubmit(fVerify)" #fVerify="ngForm" class="form form--verify" [@input]>
           <div class="control-group">
             <input
               type="text"
@@ -134,7 +134,7 @@
               [disabled]="loading"
             >
               <app-loading *ngIf="loading"></app-loading>
-              {{ loading ? null : 'Send new verification email' }}
+              {{ loading ? null : 'Send new verification token' }}
             </app-button>
           </div>
         </form>

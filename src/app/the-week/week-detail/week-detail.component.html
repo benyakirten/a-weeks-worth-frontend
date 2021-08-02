@@ -12,18 +12,26 @@
       </app-button>
     </div>
   </div>
-  <div class="shopping-list" *ngIf="shoppingList.length > 0">
+  <div class="shopping-list">
     <h5>Shopping List</h5>
-    <ul>
+    <ul *ngIf="shoppingList.length > 0; else noShoppingList">
       <li *ngFor="let item of shoppingList">
         <p>{{ item.quantity }} {{ item.unit }} of {{ item.name }}</p>
       </li>
     </ul>
+    <ng-template #noShoppingList>
+      <div class="shopping-list__no-items">
+        <h4>
+          It looks like there are no items on your shopping list.
+          Click on edit to get started.
+        </h4>
+      </div>
+    </ng-template>
   </div>
-  <div class="meals" *ngIf="meals.length > 0">
+  <div class="meals">
     <div class="form-title">
-      <h2>See meals by day</h2>
-      <div class="mode-buttons">
+      <h2>Meals</h2>
+      <div class="mode-buttons" *ngIf="meals.length > 0">
         <button
           *ngFor="let day of weekdayKey"
           [class.active]="dayFilter === day"
@@ -33,7 +41,7 @@
         </button>
       </div>
     </div>
-    <div class="meals__content">
+    <div class="meals__content" *ngIf="meals.length > 0; else noMeals">
       <div
         class="meals__content__day"
         *ngIf="filteredMeals.length > 0; else noFilteredMeals"
@@ -62,6 +70,11 @@
         </div>
       </ng-template>
     </div>
+    <ng-template #noMeals>
+      <div class="meals__no-meals">
+        <h4>It looks like there's no meals planned for the week. Click on edit to get started.</h4>
+      </div>
+    </ng-template>
   </div>
 </div>
 <app-default-modal

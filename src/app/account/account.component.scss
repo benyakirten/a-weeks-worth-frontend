@@ -6,43 +6,50 @@
     margin: $size-small;
   }
 
+  .form {
+    width: 100%;
+
+    &--verify {
+      @include respond(tab-port) {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .button {
+        margin-top: 5px;
+        @include respond (tab-port) {
+          margin-left: -1rem;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    &__buttons {
+      margin-left: 1rem;
+      display: flex;
+      &__button {
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
   .verified {
     .submit {
       margin-left: 1rem;
     }
     .body {
       display: flex;
+      flex-direction: column;
 
       @include respond(tab-port) {
         flex-direction: column-reverse;
       }
 
-      .form {
-        width: 50%;
-
-        @include respond(tab-port) {
-          width: 100%;
-        }
-
-        &__buttons {
-          margin-left: 1rem;
-          display: flex;
-          &__button {
-            &:not(:last-child) {
-              margin-right: 1rem;
-            }
-          }
-        }
-      }
       .display-box {
-        width: 50%;
-
-        @include respond(tab-port) {
-          width: 90%;
-        }
+        width: 90%;
       }
     }
-
   }
 
   .not-verified {

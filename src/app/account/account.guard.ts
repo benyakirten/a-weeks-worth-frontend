@@ -18,6 +18,9 @@ export class AccountGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (localStorage.getItem('AWW_token')) {
+      return true;
+    }
     return this.authService.isLoggedIn.pipe(
       tap(isLoggedIn => {
         if (!isLoggedIn) {

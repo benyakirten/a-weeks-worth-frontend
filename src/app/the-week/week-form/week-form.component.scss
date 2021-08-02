@@ -1,5 +1,11 @@
 @import "src/scss/abstracts";
 
+article {
+  @include respond(tab-port) {
+    padding: 2rem;
+  }
+}
+
 .name {
   margin-left: 1rem;
 }
@@ -93,16 +99,26 @@ section {
   &__title {
     display: flex;
     align-items: center;
+    margin-bottom: 2rem;
   }
   &__row {
     display: flex;
     margin: $vertical-small;
+
+    @include respond(tab-port) {
+      flex-direction: column;
+    }
   }
   &__content {
     &__control-group {
       margin-right: 2rem;
       display: flex;
       align-items: center;
+
+      @include respond(tab-port) {
+        margin-bottom: 1rem;
+      }
+
       label {
         font-size: increase($font-size-small, 0.2);
         margin-right: 0.5rem;

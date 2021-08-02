@@ -1,6 +1,9 @@
 @import "src/scss/abstracts";
 
 .container {
+  @include respond(tab-port) {
+    padding: 1rem;
+  }
   .title {
     display: flex;
     border-bottom: 1px solid $color-gray-dark-3;

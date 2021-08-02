@@ -18,6 +18,9 @@ export class GroupsGuard implements CanActivate, CanActivateChild {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (localStorage.getItem('AWW_token')) {
+      return true;
+    }
     return this.authService.isLoggedIn.pipe(
       tap(isLoggedIn => {
         if (!isLoggedIn) {
@@ -31,6 +34,9 @@ export class GroupsGuard implements CanActivate, CanActivateChild {
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (localStorage.getItem('AWW_token')) {
+      return true;
+    }
     return this.authService.isLoggedIn.pipe(
       tap(isLoggedIn => {
         if (!isLoggedIn) {

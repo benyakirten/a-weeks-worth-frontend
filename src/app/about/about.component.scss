@@ -40,6 +40,11 @@
           border: 1px solid $color-gray-dark-3;
 
           box-shadow: $shadow-small;
+
+          @include respond(tab-port) {
+            width: 80%;
+          }
+
           label {
             color: $color-primary-dark-1;
             font-size: $font-size-medium;

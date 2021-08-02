@@ -1,9 +1,15 @@
 @import "src/scss/abstracts";
 
 .container {
+  @include respond(tab-port) {
+    padding: 1rem;
+  }
+
   .name {
     display: flex;
     align-items: center;
+
+    margin-left: 1rem;
     &__display {
       margin-right: 2rem;
     }
@@ -11,6 +17,10 @@
 
   .shopping-list {
     margin: $size-small;
+    h5 {
+      border-bottom: 1px solid $color-gray-dark-3;
+      margin-bottom: 1rem;
+    }
     ul {
       margin-left: 2rem;
       list-style: circle;
@@ -18,6 +28,14 @@
       li {
         margin: $vertical-xs;
       }
+    }
+    &__no-items {
+      margin-top: 1rem;
+      padding: $size-small;
+
+      background-color: $color-gray-light-2;
+      border: 1px solid $color-gray-dark-3;
+      box-shadow: $shadow-small;
     }
   }
 
@@ -33,6 +51,15 @@
           flex-direction: column;
         }
       }
+    }
+
+    &__no-meals {
+      margin: 1rem;
+      padding: $size-small;
+
+      background-color: $color-gray-light-2;
+      border: 1px solid $color-gray-dark-3;
+      box-shadow: $shadow-small;
     }
 
     &__content {

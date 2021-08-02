@@ -29,3 +29,4 @@ Oh yeah, you can send me a message that sends me an email if you're logged in by
 ## Changelong
 7/31/2021: First upload
 8/1/2021: Add rudimentary media queries
+8/1/2021 (evening): Improved media queries, fixed guards to allow logged in users to reload pages.
