@@ -70,7 +70,7 @@
                 />
                 <label [for]="'shopping-list-unit-' + i">Unit</label>
               </div>
-              <button type="button" (click)="removeShoppingItem(i)">
+              <button type="button" (click)="removeShoppingItem(i)" [disabled]="mutationLoading">
                 Remove Item
               </button>
             </div>
@@ -145,7 +145,7 @@
                     rows="4"
                     placeholder="Turn the oven on to 350 degrees"
                     [id]="'meal-text-' + i"
-                    [value]="'meal-text-' + i"
+                    [name]="'meal-text-' + i"
                     formControlName="text"
                   ></textarea>
                 </div>
@@ -169,7 +169,8 @@
           [disabled]="!weekForm.valid || !!error || mutationLoading || !daysAndTimesUnique"
           width="8rem"
         >
-          Submit
+          <app-loading *ngIf="mutationLoading"></app-loading>
+          <span *ngIf="!mutationLoading">Submit</span>
         </app-button>
         <app-button
           type="button"
@@ -186,7 +187,8 @@
           [disabled]="!weekForm.valid || !!error || mutationLoading || !daysAndTimesUnique"
           width="8rem"
         >
-          Submit
+          <app-loading *ngIf="mutationLoading"></app-loading>
+          <span *ngIf="!mutationLoading">Submit</span>
         </app-button>
         <app-button
           type="button"
