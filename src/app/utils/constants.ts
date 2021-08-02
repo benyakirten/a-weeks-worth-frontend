@@ -77,3 +77,7 @@ export const IMPERIAL_FLUIDS: ConversionTable = {
   'tsp': 1
 };
 export const IMPERIAL_FLUID_BASE_UNIT = 'teaspoons';
+
+export const COMPLEX_RATIO_PATTERN = /^(\d+\s+)(\d+)\/(\d+)$/
+export const SIMPLE_RATIO_PATTERN = /^(\d+)\/(\d+)$/;
+export const DECIMAL_PATTERN = /^(\d+)\.(\d+)$/;

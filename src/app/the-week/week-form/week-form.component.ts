@@ -18,7 +18,7 @@ import { Day } from 'src/app/shared/enums/day.enum';
 import { Time } from 'src/app/shared/enums/time.enum';
 
 import { MealInputType, QuantityAndUnit } from 'src/app/types/general';
-import { combineMeasures, convertRatioToNumber, simplifyUnits } from 'src/app/utils/units';
+import { changeQuantityToFractions, combineMeasures, convertRatioToNumber, simplifyUnits } from 'src/app/utils/units';
 
 @Component({
   selector: 'app-week-form',
@@ -190,13 +190,16 @@ export class WeekFormComponent implements OnInit, OnDestroy {
         // The index of the ingredient in the names array will be the same as that
         // of the index in the ingredients array
         const ingredientIndex = newIngredientNames.indexOf(item.name.toLowerCase().trim());
-        const attemptToConvertRatio = convertRatioToNumber(item.quantity.trim());
+        const attemptToConvertNewItemRatio = convertRatioToNumber(item.quantity.trim());
         const newItem: QuantityAndUnit = {
-          quantity: attemptToConvertRatio ? attemptToConvertRatio : +item.quantity.trim(),
+          quantity: attemptToConvertNewItemRatio ? attemptToConvertNewItemRatio : +item.quantity.trim(),
           unit: item.unit.toLowerCase().trim()
         };
+        const attemptToConvertOldItemRatio = convertRatioToNumber(newIngredientList[ingredientIndex].quantity.trim());
         const oldItem: QuantityAndUnit = {
-          quantity: +newIngredientList[ingredientIndex].quantity.trim(),
+          quantity: attemptToConvertOldItemRatio
+            ? attemptToConvertOldItemRatio
+            : +newIngredientList[ingredientIndex].quantity.trim(),
           unit: newIngredientList[ingredientIndex].unit.toLowerCase().trim()
         };
         if (!isNaN(newItem.quantity) && !isNaN(oldItem.quantity)) {
@@ -204,10 +207,7 @@ export class WeekFormComponent implements OnInit, OnDestroy {
           if (newQuantityAndUnit) {
             newIngredientList[ingredientIndex].quantity = newQuantityAndUnit.quantity.toString();
             newIngredientList[ingredientIndex].unit = newQuantityAndUnit.unit;
-          } else if (
-            newItem.unit.toLowerCase().trim() === oldItem.unit.toLowerCase().trim() &&
-            newItem.unit.toLowerCase().trim() !== 'n/a'
-          ) {
+          } else if (newItem.unit.toLowerCase().trim() === oldItem.unit.toLowerCase().trim()) {
             // Even if we can't mathematically combine the units, if they're the same units
             // then 2 buns + 2 buns = 4 buns
             newIngredientList[ingredientIndex].quantity = (newItem.quantity + oldItem.quantity).toString();
@@ -231,9 +231,10 @@ export class WeekFormComponent implements OnInit, OnDestroy {
         const simplifiedIng: QuantityAndUnit = simplifyUnits({
           quantity: +ing.quantity, unit: ing.unit
         });
+        const ingFractioned = changeQuantityToFractions(simplifiedIng.quantity);
         return {
           name: ing.name,
-          quantity: isNaN(simplifiedIng.quantity) ? ing.quantity : simplifiedIng.quantity.toString(),
+          quantity: isNaN(simplifiedIng.quantity) ? ing.quantity : ingFractioned,
           unit: simplifiedIng.unit
         }
       })

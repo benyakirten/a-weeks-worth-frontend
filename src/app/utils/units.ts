@@ -7,7 +7,10 @@ import {
   IMPERIAL_SOLIDS,
   IMPERIAL_SOLID_BASE_UNIT,
   IMPERIAL_FLUIDS,
-  IMPERIAL_FLUID_BASE_UNIT
+  IMPERIAL_FLUID_BASE_UNIT,
+  COMPLEX_RATIO_PATTERN,
+  SIMPLE_RATIO_PATTERN,
+  DECIMAL_PATTERN
 } from './constants';
 
 export const combineMeasures = (newItem: QuantityAndUnit, oldItem: QuantityAndUnit): QuantityAndUnit | undefined => {
@@ -44,15 +47,19 @@ export const combineMeasures = (newItem: QuantityAndUnit, oldItem: QuantityAndUn
 }
 
 export const convertRatioToNumber = (quantity: string): number | null => {
-  const ratioPattern = /^(\d+)\/(\d+)$/;
-  const matches = quantity.match(ratioPattern);
-  return !!matches
-    ? +matches[1] / +matches[2]
-    : matches;
+  const complexRatioMatches = quantity.match(COMPLEX_RATIO_PATTERN);
+  if (complexRatioMatches) {
+    return +complexRatioMatches[1] + (+complexRatioMatches[2] / +complexRatioMatches[3])
+  }
+  const simpleRatioMatches = quantity.match(SIMPLE_RATIO_PATTERN);
+  if (simpleRatioMatches) {
+    return +simpleRatioMatches[1] / +simpleRatioMatches[2];
+  }
+  return null;
 }
 
 export const simplifyUnits = (item: QuantityAndUnit): QuantityAndUnit => {
-  switch(item.unit) {
+  switch (item.unit) {
     case 'milligrams':
     case 'mg':
       if (item.quantity / (1000 * 1000) > 0) {
@@ -82,7 +89,7 @@ export const simplifyUnits = (item: QuantityAndUnit): QuantityAndUnit => {
           quantity: +newQuantity
         };
       }
-    return item;
+      return item;
     case 'tsp':
     case 'teaspoons':
       if (item.quantity / 768 > 0) {
@@ -124,4 +131,30 @@ export const simplifyUnits = (item: QuantityAndUnit): QuantityAndUnit => {
     default:
       return item;
   }
+}
+
+export const changeQuantityToFractions = (quantity: number): string => {
+  const _quantity = quantity.toFixed(2);
+  const matches = _quantity.match(DECIMAL_PATTERN);
+  if (!matches) return quantity.toString();
+
+  let whole = +matches[1] > 0 ? +matches[1] : 0;
+  const decimal = +matches[2];
+
+  let _decimal = '';
+
+  if (decimal < 12) {
+    _decimal = '';
+  } else if (decimal < 37) {
+    _decimal = '1/4';
+  } else if (decimal < 62) {
+    _decimal = '1/2';
+  } else if (decimal < 77) {
+    _decimal = '3/4';
+  } else if (decimal >= 77) {
+    _decimal = '';
+    whole++;
+  }
+
+  return `${whole > 0 ? whole : ''} ${_decimal}`;
 }

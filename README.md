@@ -36,3 +36,4 @@ Oh yeah, you can send me a message that sends me an email if you're logged in by
 > * Fixed the shopping list consolidation on editing a shopping list so it no longer saved NaN values and so duplicate values (only happened when saving two quantities that weren't numbers) were removed.
 > * The loading bar now shows when loading recipes for the first time.
 > * Translate recipe now correctly saves the translated recipe's URL.
+> * Added compilation back into ratios on the-week edit form. E.G: .25 + .25 yields 1/2, 1.37 + 0.44 yields 1 3/4, 0.66 + 0.33 yields 1
