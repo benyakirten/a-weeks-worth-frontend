@@ -1,15 +1,20 @@
 <div class="center">
-  <div class="loading" *ngIf="loading">
+  <div class="error" *ngIf="error">
+    <app-error-display>
+      {{ error }}
+    </app-error-display>
+  </div>
+  <div class="loading" *ngIf="!error && loading">
     <app-loading></app-loading>
   </div>
-  <ul *ngIf="!loading && recipes && recipes.length > 0">
+  <ul *ngIf="!error && !loading && recipes && recipes.length > 0">
     <app-recipe-item
       *ngFor="let recipe of recipes"
       [recipe]="recipe"
       [@recipes]
     ></app-recipe-item>
   </ul>
-  <app-card *ngIf="!loading && recipes && recipes.length === 0">
+  <app-card *ngIf="!error && !loading && recipes && recipes.length === 0">
     <div class="no-recipes">
       <div>
         <h4>

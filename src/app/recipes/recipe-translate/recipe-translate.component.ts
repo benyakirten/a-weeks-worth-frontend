@@ -68,7 +68,7 @@ export class RecipeTranslateComponent implements OnDestroy {
         if (data) {
           this.router.navigate(['/recipes', data.createRecipe.recipe.id]);
         }
-      })
+      });
   }
 
   ngOnDestroy(): void {

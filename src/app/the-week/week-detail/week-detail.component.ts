@@ -33,8 +33,10 @@ export class WeekDetailComponent implements OnInit, OnDestroy {
 
   name?: string;
   meals: Array<PartialMeal> = [];
-  dayFilter: DayKey = 'MON';
   shoppingList: Array<Ingredient> = [];
+
+  dayFilter: DayKey = 'MON';
+  dayMode: boolean = true;
 
   modalId: string = 'the-week-detail-modal';
   modalTitle: string = 'Something went wrong';
@@ -98,6 +100,10 @@ export class WeekDetailComponent implements OnInit, OnDestroy {
       });
   }
 
+  toggleDayMode() {
+    this.dayMode = !this.dayMode;
+  }
+
   get weekdayKey(): Array<DayKey> {
     return Object.keys(Day) as Array<DayKey>;
   }
@@ -119,7 +125,18 @@ export class WeekDetailComponent implements OnInit, OnDestroy {
   }
 
   get filteredMeals() {
-    return this.meals.filter(m => m.day === this.dayFilter);
+    return this.mealsByDay(this.dayFilter);
+  }
+
+  mealsByDay(day: DayKey) {
+    return this.meals.filter(m => m.day === day);
+  }
+
+  prepareShoppingItem(name: string, quantity: string, unit: string): string {
+    if (unit.toLowerCase().trim() === 'n/a') {
+      return `${name}, ${quantity}`;
+    }
+    return `${quantity} ${unit} of ${name}`;
   }
 
   showModal(): void {

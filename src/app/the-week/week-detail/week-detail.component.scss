@@ -41,11 +41,13 @@
 
   .meals {
     .form-title {
-      display: flex;
       border-bottom: 1px solid $color-black;
       margin: $size-small;
 
       .mode-buttons {
+        button {
+          border-bottom: 1px solid $color-black;
+        }
         @include respond(tab-port) {
           display: flex;
           flex-direction: column;

@@ -16,14 +16,14 @@
     <h5>Shopping List</h5>
     <ul *ngIf="shoppingList.length > 0; else noShoppingList">
       <li *ngFor="let item of shoppingList">
-        <p>{{ item.quantity }} {{ item.unit }} of {{ item.name }}</p>
+        <p>{{ prepareShoppingItem(item.name, item.quantity, item.unit) }}</p>
       </li>
     </ul>
     <ng-template #noShoppingList>
       <div class="shopping-list__no-items">
         <h4>
-          It looks like there are no items on your shopping list.
-          Click on edit to get started.
+          It looks like there are no items on your shopping list. Click on edit
+          to get started.
         </h4>
       </div>
     </ng-template>
@@ -31,7 +31,12 @@
   <div class="meals">
     <div class="form-title">
       <h2>Meals</h2>
-      <div class="mode-buttons" *ngIf="meals.length > 0">
+      <div class="change-mode">
+        <app-button (click)="toggleDayMode()" margin="0 0 1rem 0">
+          {{ dayMode ? "Whole week's meals" : "Meals by day" }}
+        </app-button>
+      </div>
+      <div class="mode-buttons" *ngIf="dayMode && meals.length > 0">
         <button
           *ngFor="let day of weekdayKey"
           [class.active]="dayFilter === day"
@@ -42,27 +47,55 @@
       </div>
     </div>
     <div class="meals__content" *ngIf="meals.length > 0; else noMeals">
-      <div
-        class="meals__content__day"
-        *ngIf="filteredMeals.length > 0; else noFilteredMeals"
-      >
-        <ul>
-          <li *ngFor="let meal of filteredMeals">
-            <h5>Meal for {{ mealtime(meal.time) }}:</h5>
-            <div *ngIf="meal.recipe">
-              <span>Recipe:&nbsp;
-                <a [routerLink]="['/recipes', meal.recipe.id]">
-                  {{ meal.recipe.name }}
-                </a>
-              </span>
-            </div>
-            <div *ngIf="meal.text">
-              <span>
-                Direction: {{ meal.text }}
-              </span>
-            </div>
-          </li>
-        </ul>
+      <div *ngIf="dayMode">
+        <div
+          class="meals__content__day"
+          *ngIf="filteredMeals.length > 0; else noFilteredMeals"
+        >
+          <ul>
+            <li *ngFor="let meal of filteredMeals">
+              <h5>Meal for {{ mealtime(meal.time) }}:</h5>
+              <div *ngIf="meal.recipe">
+                <span>
+                  Recipe:&nbsp;
+                  <a [routerLink]="['/recipes', meal.recipe.id]">
+                    {{ meal.recipe.name }}
+                  </a>
+                </span>
+              </div>
+              <div *ngIf="meal.text">
+                <span> Direction: {{ meal.text }} </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="!dayMode">
+        <div class="meals__content__day">
+          <ul>
+            <li class="meals__content__day" *ngFor="let day of weekdayKey">
+              <div *ngIf="mealsByDay(day).length > 0">
+                <h5>Meals for: {{ weekday(day) }}</h5>
+                <ul>
+                  <li *ngFor="let daysMeals of mealsByDay(day)">
+                    <p>{{ mealtime(daysMeals.time) }}:</p>
+                    <div *ngIf="daysMeals.recipe">
+                      <span>
+                        Recipe:&nbsp;
+                        <a [routerLink]="['/recipes', daysMeals.recipe.id]">
+                          {{ daysMeals.recipe.name }}
+                        </a>
+                      </span>
+                    </div>
+                    <div *ngIf="daysMeals.text">
+                      <span> Direction: {{ daysMeals.text }} </span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
       <ng-template #noFilteredMeals>
         <div class="meals__content__no-meal">
@@ -72,7 +105,10 @@
     </div>
     <ng-template #noMeals>
       <div class="meals__no-meals">
-        <h4>It looks like there's no meals planned for the week. Click on edit to get started.</h4>
+        <h4>
+          It looks like there's no meals planned for the week. Click on edit to
+          get started.
+        </h4>
       </div>
     </ng-template>
   </div>

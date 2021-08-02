@@ -39,12 +39,14 @@ export class RecipesService {
   }
 
   createRecipe(recipe: Recipe) {
+    console.log(recipe);
     return this.apollo
       .mutate<CreateRecipe>(
         {
           mutation: CREATE_RECIPE,
           variables: {
-            ...recipe
+            ...recipe,
+            url: recipe.url ? recipe.url : ''
           },
           update: (cache, { data, errors }) => {
             if (errors) {
@@ -55,7 +57,7 @@ export class RecipesService {
             cache.writeQuery({
               query: GET_ALL_RECIPES,
               data: { recipes: updatedRecipes }
-            })
+            });
           }
         }
       );

@@ -199,15 +199,14 @@ export class WeekFormComponent implements OnInit, OnDestroy {
           quantity: +newIngredientList[ingredientIndex].quantity.trim(),
           unit: newIngredientList[ingredientIndex].unit.toLowerCase().trim()
         };
-        if (newItem.quantity && oldItem.quantity) {
-          const newQuantityAndUnit= combineMeasures(newItem, oldItem);
+        if (!isNaN(newItem.quantity) && !isNaN(oldItem.quantity)) {
+          const newQuantityAndUnit = combineMeasures(newItem, oldItem);
           if (newQuantityAndUnit) {
             newIngredientList[ingredientIndex].quantity = newQuantityAndUnit.quantity.toString();
             newIngredientList[ingredientIndex].unit = newQuantityAndUnit.unit;
           } else if (
-            newItem.quantity &&
-            oldItem.quantity &&
-            newItem.unit.toLowerCase().trim() === oldItem.unit.toLowerCase().trim()
+            newItem.unit.toLowerCase().trim() === oldItem.unit.toLowerCase().trim() &&
+            newItem.unit.toLowerCase().trim() !== 'n/a'
           ) {
             // Even if we can't mathematically combine the units, if they're the same units
             // then 2 buns + 2 buns = 4 buns
@@ -216,6 +215,9 @@ export class WeekFormComponent implements OnInit, OnDestroy {
             newIngredientNames.push(item.name.toLowerCase());
             newIngredientList.push(item);
           }
+        } else {
+          newIngredientNames.push(item.name.toLowerCase());
+          newIngredientList.push(item);
         }
       } else {
         // Let's lower case it so butter is also included with Butter
@@ -224,16 +226,24 @@ export class WeekFormComponent implements OnInit, OnDestroy {
         newIngredientList.push(item);
       }
     }
-    const simplifiedIngredients: Array<Ingredient> = newIngredientList.map(ing => {
-      const simplifiedIng: QuantityAndUnit = simplifyUnits({
-        quantity: +ing.quantity, unit: ing.unit
+    const simplifiedIngredients: Array<Ingredient> = newIngredientList
+      .map(ing => {
+        const simplifiedIng: QuantityAndUnit = simplifyUnits({
+          quantity: +ing.quantity, unit: ing.unit
+        });
+        return {
+          name: ing.name,
+          quantity: isNaN(simplifiedIng.quantity) ? ing.quantity : simplifiedIng.quantity.toString(),
+          unit: simplifiedIng.unit
+        }
+      })
+      .filter((ing, ind, ings) => {
+        if (ind === ings.length - 1) {
+          return true;
+        }
+        return !ings.slice(ind + 1).find(i => i.name === ing.name);
       });
-      return {
-        name: ing.name,
-        quantity: simplifiedIng.quantity.toString(),
-        unit: simplifiedIng.unit
-      }
-    });
+
     const simplifiedFormArray = new FormArray([]);
     for (let ing of simplifiedIngredients) {
       simplifiedFormArray.push(

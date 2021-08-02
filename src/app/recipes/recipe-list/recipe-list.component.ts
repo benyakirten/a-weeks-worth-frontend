@@ -15,8 +15,8 @@ import { moveDownFade } from 'src/app/shared/animations/void-animations';
   styleUrls: ['./recipe-list.component.scss']
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
-  loading: boolean = false;
-  loggedIn: boolean = false;
+  loading: boolean = true;
+  error?: string;
   recipes?: Array<Recipe>;
 
   private querySubscription?: Subscription;
@@ -25,7 +25,15 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.querySubscription = this.recipesService.recipes
-      .subscribe(({ data }) => this.recipes = data['recipes']);
+      .subscribe(({ data, errors }) => {
+        this.loading = false;
+        if (errors) {
+          this.error = errors[0].message;
+          return;
+        }
+        this.error = undefined;
+        this.recipes = data.recipes;
+    });
   }
 
   ngOnDestroy() {

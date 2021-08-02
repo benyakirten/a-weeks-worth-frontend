@@ -27,7 +27,12 @@ Oh yeah, you can send me a message that sends me an email if you're logged in by
 * Improve queries
 
 ## Changelong
-7/31/2021: First upload
-8/1/2021: Add rudimentary media queries
-8/1/2021 (evening): Improve media queries, fixed guards to allow logged in users to reload pages.
-8/1/2021 (night): Now the name and not the value is set manually on the-week edit form's textareas.
+* 7/31/2021: First upload
+* 8/1/2021: Add rudimentary media queries
+* 8/1/2021 (evening): Improve media queries, fixed guards to allow logged in users to reload pages.
+* 8/1/2021 (night): Now the name and not the value is set manually on the-week edit form's textareas.
+* 8/2/2021:
+> * Added a way to see the shopping list by the whole week.
+> * Fixed the shopping list consolidation on editing a shopping list so it no longer saved NaN values and so duplicate values (only happened when saving two quantities that weren't numbers) were removed.
+> * The loading bar now shows when loading recipes for the first time.
+> * Translate recipe now correctly saves the translated recipe's URL.
