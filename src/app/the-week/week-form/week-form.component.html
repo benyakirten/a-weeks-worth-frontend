@@ -18,14 +18,43 @@
             <h4>Shopping List</h4>
           </div>
           <div class="shopping-list__head__add">
-            <app-button type="button" (click)="addShoppingItem()" width="20rem" height="10rem">
+            <app-button
+              type="button"
+              [disabled]="mutationLoading"
+              (click)="addShoppingItem()"
+              width="20rem"
+              height="10rem"
+            >
               Add Shopping List Item
             </app-button>
-            <app-button type="button" (click)="addRecipeIngredientsToShoppingList()" margin="1rem" width="20rem" height="10rem">
+            <app-button
+              type="button"
+              [disabled]="mutationLoading"
+              (click)="addRecipeIngredientsToShoppingList()"
+              margin="1rem"
+              width="20rem"
+              height="10rem"
+            >
               Add Week's Ingredients to Shopping List
             </app-button>
-            <app-button type="button" (click)="consolidateShoppingList()" width="20rem" height="10rem">
+            <app-button
+              type="button"
+              [disabled]="mutationLoading"
+              (click)="consolidateShoppingList()"
+              width="20rem"
+              height="10rem"
+            >
               Consolidate Shopping List
+            </app-button>
+            <app-button
+              type="button"
+              [disabled]="mutationLoading"
+              (click)="deleteShoppingList()"
+              margin="1rem"
+              width="20rem"
+              height="10rem"
+            >
+              Delete Shopping List
             </app-button>
           </div>
         </div>
@@ -70,7 +99,11 @@
                 />
                 <label [for]="'shopping-list-unit-' + i">Unit</label>
               </div>
-              <button type="button" (click)="removeShoppingItem(i)" [disabled]="mutationLoading">
+              <button
+                type="button"
+                (click)="removeShoppingItem(i)"
+                [disabled]="mutationLoading"
+              >
                 Remove Item
               </button>
             </div>
@@ -88,6 +121,14 @@
               margin="0 2rem"
             >
               Add meal
+            </app-button>
+            <app-button
+              type="button"
+              (click)="deleteAllMeals()"
+              [disabled]="mutationLoading"
+              margin="0 2rem"
+            >
+              Delete All Meals
             </app-button>
           </div>
         </div>
@@ -130,8 +171,13 @@
                     [name]="'meal-recipe' + i"
                     formControlName="recipeId"
                   >
-                    <option [ngValue]="null">Select Recipe (Leave here for no recipe)</option>
-                    <option *ngFor="let recipe of recipes" [ngValue]="recipe.id">
+                    <option [ngValue]="null">
+                      Select Recipe (Leave here for no recipe)
+                    </option>
+                    <option
+                      *ngFor="let recipe of recipes"
+                      [ngValue]="recipe.id"
+                    >
                       {{ recipe.name }}
                     </option>
                   </select>
@@ -166,7 +212,9 @@
       <div class="form__buttons">
         <app-button
           type="submit"
-          [disabled]="!weekForm.valid || !!error || mutationLoading || !daysAndTimesUnique"
+          [disabled]="
+            !weekForm.valid || !!error || mutationLoading || !daysAndTimesUnique
+          "
           width="8rem"
         >
           <app-loading *ngIf="mutationLoading"></app-loading>
@@ -184,7 +232,9 @@
       <div class="form__submit">
         <app-button
           type="submit"
-          [disabled]="!weekForm.valid || !!error || mutationLoading || !daysAndTimesUnique"
+          [disabled]="
+            !weekForm.valid || !!error || mutationLoading || !daysAndTimesUnique
+          "
           width="8rem"
         >
           <app-loading *ngIf="mutationLoading"></app-loading>
@@ -192,6 +242,7 @@
         </app-button>
         <app-button
           type="button"
+          [disabled]="mutationLoading"
           [routerLink]="['/the-week', groupId]"
           width="8rem"
           margin="0 2rem"

@@ -18,7 +18,7 @@ import { Day } from 'src/app/shared/enums/day.enum';
 import { Time } from 'src/app/shared/enums/time.enum';
 
 import { MealInputType, QuantityAndUnit } from 'src/app/types/general';
-import { changeQuantityToFractions, combineMeasures, convertRatioToNumber, simplifyUnits } from 'src/app/utils/units';
+import { changeQuantityToFractions, combineMeasures, convertRatioToNumber, convertToSmallerUnits, simplifyUnits } from 'src/app/utils/units';
 
 @Component({
   selector: 'app-week-form',
@@ -231,11 +231,12 @@ export class WeekFormComponent implements OnInit, OnDestroy {
         const simplifiedIng: QuantityAndUnit = simplifyUnits({
           quantity: +ing.quantity, unit: ing.unit
         });
-        const ingFractioned = changeQuantityToFractions(simplifiedIng.quantity);
+        const convertedUnits = convertToSmallerUnits(simplifiedIng);
+        const ingFractioned = changeQuantityToFractions(convertedUnits.quantity);
         return {
           name: ing.name,
           quantity: isNaN(simplifiedIng.quantity) ? ing.quantity : ingFractioned,
-          unit: simplifiedIng.unit
+          unit: convertedUnits.unit
         }
       })
       .filter((ing, ind, ings) => {
@@ -276,6 +277,10 @@ export class WeekFormComponent implements OnInit, OnDestroy {
     (<FormArray>this.weekForm.get('shoppingList')).removeAt(idx);
   }
 
+  deleteShoppingList() {
+    this.weekForm.setControl('shoppingList', new FormArray([]));
+  }
+
   get mealsControls() {
     return (<FormArray>this.weekForm.get('meals')).controls;
   }
@@ -293,6 +298,10 @@ export class WeekFormComponent implements OnInit, OnDestroy {
 
   removeMeal(idx: number) {
     (<FormArray>this.weekForm.get('meals')).removeAt(idx);
+  }
+
+  deleteAllMeals() {
+    this.weekForm.setControl('meals', new FormArray([]));
   }
 
   get weekdayKey(): Array<DayKey> {
