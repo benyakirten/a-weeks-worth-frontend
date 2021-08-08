@@ -10,7 +10,7 @@ import { ModalService } from 'src/app/shared/services/modal/modal.service';
 import { WeekService } from 'src/app/shared/services/week/week.service';
 import { RecipesService } from 'src/app/shared/services/recipes/recipes.service';
 
-import { PartialMeal, DayKey, TimeKey } from 'src/app/types/graphql/individual';
+import { PartialMeal, DayKey, TimeKey, UpdateIndividual } from 'src/app/types/graphql/individual';
 import { Ingredient } from 'src/app/shared/classes/ingredient/ingredient';
 import { Recipe } from 'src/app/shared/classes/recipe/recipe';
 import { Meal } from 'src/app/shared/classes/meal/meal';
@@ -18,7 +18,15 @@ import { Day } from 'src/app/shared/enums/day.enum';
 import { Time } from 'src/app/shared/enums/time.enum';
 
 import { MealInputType, QuantityAndUnit } from 'src/app/types/general';
-import { changeQuantityToFractions, combineMeasures, convertRatioToNumber, convertToSmallerUnits, simplifyUnits } from 'src/app/utils/units';
+import {
+  changeQuantityToFractions,
+  combineMeasures,
+  convertRatioToNumber,
+  convertToSmallerUnits,
+  simplifyUnits
+} from 'src/app/utils/units';
+import { GraphQLError } from 'graphql';
+import { UpdateGroup } from 'src/app/types/graphql/groups';
 
 @Component({
   selector: 'app-week-form',
@@ -335,11 +343,10 @@ export class WeekFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (
       !this.weekForm.valid ||
-      this.error ||
       !this.daysAndTimesUnique) {
       this.modalTitle = 'An Error Occurred While Creating The Recipe'
       this.modalText = `
-        The form isn't correct, and we can't proceed. The most likely reason
+        The form isn't correct and we can't proceed. The most likely reason
         is that the form has empty fields, hasn't been edited, or there are
         days with overlapping mealtimes. Please check the form and try again.
       `
@@ -347,34 +354,35 @@ export class WeekFormComponent implements OnInit, OnDestroy {
       return;
     }
     const shoppingList = this.weekForm.value['shoppingList'];
-    const meals: Array<MealInputType> = (<Array<Meal>>this.weekForm.value['meals']).map
-      (m => ({ ...m, time: Time[m.time].toUpperCase(), day: Day[m.day].toUpperCase() }));
+    const meals: Array<MealInputType> = (<Array<Meal>>this.weekForm.value['meals'])
+      .map(m => ({
+        ...m,
+        time: Time[m.time].toUpperCase(),
+        day: Day[m.day].toUpperCase()
+      }));
+
+    this.mutationSubscription?.unsubscribe();
     if (this.groupId === 'my-week') {
-      this.mutationSubscription?.unsubscribe();
       this.mutationSubscription = this.weekService
         .updateWeekForIndividual(shoppingList, meals)
-        .subscribe(({ errors, data }) => {
-          if (errors) {
-            this.error = errors[0].message;
-            return;
-          }
-          if (data) {
-            this.router.navigate(['the-week', this.groupId])
-          }
-        });
+        .subscribe(({ errors, data }) => this.handleMutationResults(errors, data));
     } else {
-      this.mutationSubscription?.unsubscribe();
       this.mutationSubscription = this.weekService
         .updateWeekForGroup(this.groupId!, shoppingList, meals)
-        .subscribe(({ errors, data }) => {
-          if (errors) {
-            this.error = errors[0].message;
-            return;
-          }
-          if (data) {
-            this.router.navigate(['the-week', this.groupId])
-          }
-        });
+        .subscribe(({ errors, data }) => this.handleMutationResults(errors, data));
+    }
+  }
+
+  private handleMutationResults(
+    errors: readonly GraphQLError[] | undefined,
+    data: UpdateGroup | UpdateIndividual | null | undefined
+  ) {
+    if (errors) {
+      this.error = errors[0].message;
+      return;
+    }
+    if (data) {
+      this.router.navigate(['the-week', this.groupId])
     }
   }
 

@@ -19,15 +19,15 @@ export class AboutComponent implements OnInit, OnDestroy {
   result?: string;
   messageGood: boolean = true;
 
-  scroll(el: HTMLElement) {
-    el.scrollIntoView({ behavior: 'smooth' });
-  }
-
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.authSub = this.authService.isLoggedIn
       .subscribe(isLoggedIn => this.loggedIn = isLoggedIn);
+  }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({ behavior: 'smooth' });
   }
 
   onSubmit(form: NgForm) {
@@ -41,8 +41,6 @@ export class AboutComponent implements OnInit, OnDestroy {
     this.mutationSub = this.authService
       .messageMe(form.value['message'])
       .subscribe(({ data, errors }) => {
-        console.log(data);
-        console.log(errors);
         this.loading = false;
         if (errors) {
           this.messageGood = false;

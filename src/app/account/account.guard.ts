@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot
 } from '@angular/router';
 
-import { tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
@@ -18,16 +18,15 @@ export class AccountGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (localStorage.getItem('AWW_token')) {
-      return true;
-    }
     return this.authService.isLoggedIn.pipe(
-      tap(isLoggedIn => {
+      map(isLoggedIn => {
         if (!isLoggedIn) {
           this.router.navigate(['/auth'], {
             queryParams: { returnUrl: state.url }
-          })
+          });
+          return false;
         }
+        return true;
       })
     );
   }

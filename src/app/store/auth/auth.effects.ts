@@ -23,13 +23,14 @@ const setStorageAndTimeout = (user: User, authService: AuthService) => {
   }, MILLISECONDS_IN_TWO_HOURS - MILLISECONDS_IN_A_MINUTE );
 }
 
-const removeStorage = () => {
+const removeStorage = (authService: AuthService) => {
   localStorage.removeItem('AWW_email');
   localStorage.removeItem('AWW_username');
   localStorage.removeItem('AWW_token');
   localStorage.removeItem('AWW_refresh');
   localStorage.removeItem('AWW_expiration');
   localStorage.removeItem('AWW_verified');
+  authService.cancelTimeout();
 }
 
 @Injectable()
@@ -44,7 +45,7 @@ export class AuthEffects {
   authLogout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.logout),
-      tap(() => removeStorage())
+      tap(() => removeStorage(this.authService))
     ), { dispatch: false }
   );
 

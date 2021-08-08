@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="meals__content" *ngIf="meals.length > 0; else noMeals">
-      <div *ngIf="dayMode">
+      <div class="day-mode" *ngIf="dayMode">
         <div
           class="meals__content__day"
           *ngIf="filteredMeals.length > 0; else noFilteredMeals"
@@ -70,14 +70,14 @@
           </ul>
         </div>
       </div>
-      <div *ngIf="!dayMode">
+      <div class="no-day-mode" *ngIf="!dayMode">
         <div class="meals__content__day">
           <ul>
             <li class="meals__content__day" *ngFor="let day of weekdayKey">
               <div *ngIf="mealsByDay(day).length > 0">
                 <h5>Meals for: {{ weekday(day) }}</h5>
                 <ul>
-                  <li *ngFor="let daysMeals of mealsByDay(day)">
+                  <li *ngFor="let daysMeals of mealsByDay(day)" class="meals__content__day__list--no-day-mode">
                     <p>{{ mealtime(daysMeals.time) }}:</p>
                     <div *ngIf="daysMeals.recipe">
                       <span>

@@ -1,4 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+
+import { StoreModule } from '@ngrx/store';
+
+import * as fromApp from 'src/app/store/app.reducer';
 
 import { RecipesComponent } from './recipes.component';
 
@@ -8,7 +13,8 @@ describe('RecipesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecipesComponent ]
+      declarations: [ RecipesComponent ],
+      imports: [StoreModule.forRoot(fromApp.appReducer)]
     })
     .compileComponents();
   });
@@ -19,7 +25,17 @@ describe('RecipesComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should render the translate recipe and create recipe buttons conditionally if the user is logged in', () => {
+    component.loggedIn = false;
+    fixture.detectChanges();
+
+    const recipeButtonsNoUser = fixture.debugElement.query(By.css('.recipe-buttons'));
+    expect(recipeButtonsNoUser).not.toBeTruthy();
+
+    component.loggedIn = true;
+    fixture.detectChanges();
+
+    const recipeButtonsWithUser = fixture.debugElement.query(By.css('.recipe-buttons'));
+    expect(recipeButtonsWithUser).toBeTruthy();
   });
 });

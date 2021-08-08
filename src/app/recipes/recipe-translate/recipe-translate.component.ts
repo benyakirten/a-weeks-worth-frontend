@@ -42,7 +42,6 @@ export class RecipeTranslateComponent implements OnDestroy {
     this.url = e;
   }
 
-
   toggleConvertUnits() {
     this.convertUnits = !this.convertUnits;
   }
@@ -50,7 +49,7 @@ export class RecipeTranslateComponent implements OnDestroy {
   async onSubmit() {
     this.loading = true;
     this.error = undefined;
-    const translatedRecipe =  await this.recipesService
+    const translatedRecipe = await this.recipesService
       .translateRecipe(this.url, this.convertUnits);
     if (translatedRecipe.error) {
       this.loading = false;

@@ -24,7 +24,7 @@ import {
   LeaveGroup,
   RequestAccess
 } from 'src/app/types/graphql/individual';
-import { Group } from '../../classes/group/group';
+import { Group } from 'src/app/shared/classes/group/group';
 
 @Injectable({ providedIn: 'root' })
 export class GroupsService {
@@ -34,15 +34,13 @@ export class GroupsService {
   get groups() {
     return this.apollo.watchQuery<GroupsResponse>({
       query: GET_ALL_GROUPS
-    })
-      .valueChanges
+    }).valueChanges
   }
 
   get myGroups() {
     return this.apollo.watchQuery<MyGroupsResponse>({
       query: GET_MY_GROUPS
-    })
-      .valueChanges
+    }).valueChanges
   }
 
   createGroup(name: string) {

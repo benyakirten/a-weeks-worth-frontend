@@ -40,9 +40,15 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   const errorHandling = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
       localStorage.setItem('error', graphQLErrors[0].message);
+      alert(graphQLErrors[0].message + ` -- The website is suffering from technical issues and
+        will probably not function correctly. I suggest reloading or trying again later. Sorry for the inconvenience.
+      `);
     }
     if (networkError) {
       localStorage.setItem('error', networkError.message);
+      alert(networkError.message  + ` -- The website is suffering from technical issues and
+        will probably not function correctly. I suggest reloading or trying again later. Sorry for the inconvenience.
+      `);
     }
   });
 

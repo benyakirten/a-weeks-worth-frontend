@@ -29,7 +29,7 @@
       <div
         class="card"
         [@card]
-        *ngIf="!loadingMyGroups && myGroups.length < 1"
+        *ngIf="!loadingMyGroups && myGroups.length === 0"
       >
         <h3>
           It looks like you're not in any groups. Click on Other Groups then
@@ -64,12 +64,12 @@
             </div>
           </div>
           <h5>Members:</h5>
-          <ul>
+          <ul class="card__members">
             <li *ngFor="let member of group.members">{{ member }}</li>
           </ul>
           <div *ngIf="group.requests && group.requests.length > 0">
             <h5>Requests for access:</h5>
-            <ul>
+            <ul class="card__requests">
               <li *ngFor="let request of group.requests">
                 <p>{{ request.name }}</p>
                 <app-button
@@ -171,14 +171,12 @@
                 "
                 [disabled]="loadingMutations"
               >
-                <span
-                  *ngIf="!loadingMutations && !alreadyRequestedAccess(group.id)"
-                  >Request Access</span
-                >
-                <span
-                  *ngIf="!loadingMutations && alreadyRequestedAccess(group.id)"
-                  >Cancel Request</span
-                >
+                <span *ngIf="!loadingMutations && !alreadyRequestedAccess(group.id)">
+                  Request Access
+                </span>
+                <span *ngIf="!loadingMutations && alreadyRequestedAccess(group.id)">
+                  Cancel Request
+                </span>
                 <app-loading *ngIf="loadingMutations"></app-loading>
               </app-button>
             </div>

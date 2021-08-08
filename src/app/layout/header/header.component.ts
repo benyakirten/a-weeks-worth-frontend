@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import * as fromApp from 'src/app/store/app.reducer';
 
@@ -15,19 +15,24 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  authSub?: Subscription;
   storeSub?: Subscription;
+
+  loading: boolean = false;
   loggedIn: boolean = false;
 
   constructor(
-    private store: Store<fromApp.AppState>,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private store: Store<fromApp.AppState>
   ) {}
 
   ngOnInit(): void {
+    this.authSub = this.authService.isLoggedIn
+      .subscribe(loggedIn => this.loggedIn = loggedIn);
     this.storeSub = this.store.select('auth')
-      .pipe(map(authState => !!authState.user))
-      .subscribe(loggedIn => this.loggedIn = loggedIn)
+      .pipe(map(authState => authState.loading))
+      .subscribe(loading => this.loading = loading);
   }
 
   logout(): void {
@@ -36,6 +41,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.authSub?.unsubscribe();
     this.storeSub?.unsubscribe();
   }
 }

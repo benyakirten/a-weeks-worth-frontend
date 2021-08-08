@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { ErrorDisplayComponent } from './error-display.component';
 
@@ -19,7 +20,16 @@ describe('ErrorDisplayComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should alternate the background color if success is true or false', () => {
+    const div = fixture.debugElement.query(By.css('div')).nativeElement as HTMLDivElement;
+    component.success = true;
+    fixture.detectChanges();
+
+    expect(div.style.backgroundColor).toEqual('rgba(183, 228, 199, 0.7)');
+
+    component.success = false;
+    fixture.detectChanges();
+
+    expect(div.style.backgroundColor).toEqual('rgba(255, 77, 109, 0.7)');
   });
 });

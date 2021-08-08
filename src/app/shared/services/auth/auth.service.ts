@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { map, take } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Apollo } from 'apollo-angular';
 
 import * as fromApp from 'src/app/store/app.reducer';
@@ -65,12 +65,13 @@ export class AuthService {
       mutation: REFRESH_TOKEN,
       variables: { token }
     }).subscribe(({ data }) => {
-      if (data?.refreshToken.errors) {
-        this.logout();
-        this.store.dispatch(AuthActions.setError({ error: this.handleError(data.refreshToken.errors) }));
-        return;
-      }
+      this.store.dispatch(AuthActions.setLoading({ loading: false }));
       if (data) {
+        if (data.refreshToken.errors) {
+          this.logout();
+          this.store.dispatch(AuthActions.setError({ error: this.handleError(data.refreshToken.errors) }));
+          return;
+        }
         const userEmail = localStorage.getItem('AWW_email');
         const userUsername = localStorage.getItem('AWW_username');
         const userVerified = localStorage.getItem('AWW_verified');
@@ -90,7 +91,7 @@ export class AuthService {
           this.logout();
         }
       }
-    })
+    });
   }
 
   verifyAccount(token: string) {

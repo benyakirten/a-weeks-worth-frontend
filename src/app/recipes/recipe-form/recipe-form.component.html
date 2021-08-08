@@ -14,7 +14,7 @@
       <div class="form__buttons">
         <div>
           <app-button
-            [disabled]="!recipeForm.valid && !recipeForm.touched"
+            [disabled]="!recipeForm.valid || !recipeForm.touched"
             type="submit"
             width="10rem"
           >

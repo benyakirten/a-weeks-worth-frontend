@@ -13,8 +13,9 @@
       <li *ngIf="loggedIn"><a routerLink="/groups">Groups</a></li>
     </ul>
     <ul class="right">
-      <li><a routerLink="/account" *ngIf="loggedIn">Account</a></li>
-      <li>
+      <li *ngIf="loading"><app-loading></app-loading></li>
+      <li *ngIf="!loading && loggedIn"><a routerLink="/account">Account</a></li>
+      <li *ngIf="!loading">
         <a routerLink="/auth" *ngIf="!loggedIn">Login/Register</a>
         <span
           (click)="logout()"

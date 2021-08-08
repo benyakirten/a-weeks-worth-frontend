@@ -10,16 +10,19 @@ import {
 import { Subscription } from 'rxjs';
 
 import { Recipe } from 'src/app/shared/classes/recipe/recipe';
+import { Step } from 'src/app/shared/classes/step/step';
+import { Ingredient } from 'src/app/shared/classes/ingredient/ingredient';
+import { IngredientLike, StepLike } from 'src/app/types/general';
+
 import { moveRightFade } from 'src/app/shared/animations/void-animations';
 
 import { RecipesService } from 'src/app/shared/services/recipes/recipes.service';
 import { ModalService } from 'src/app/shared/services/modal/modal.service';
 
+
 @Component({
   selector: 'app-recipe-form',
-  animations: [
-    moveRightFade('list')
-  ],
+  animations: [moveRightFade('list')],
   templateUrl: './recipe-form.component.html',
   styleUrls: ['./recipe-form.component.scss']
 })
@@ -161,7 +164,9 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
   }
 
   navigateAway() {
-    this.router.navigate(['/recipes']);
+    this.recipe
+      ? this.router.navigate(['/recipes', this.recipe.id])
+      : this.router.navigate(['/recipes']);
   }
 
   onDelete() {
@@ -190,12 +195,12 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (!this.recipeForm.valid || this.recipeForm.pristine || this.error) {
-      this.modalTitle = 'An Error Occurred While Creating The Recipe'
+    if (!this.recipeForm.valid || this.recipeForm.pristine) {
+      this.modalTitle = 'An Error Occurred While Creating The Recipe';
       this.modalText = `
-        I haven't yet figured out why you're able to submit the form while it's
-        incorrect, but it is possible to do so. Please fill out all boxes marked
-        as required or, if you're updating a recipe, change some detail about it, even
+        Something went wrong. Either the recipe isn't valid or is unchanged.
+        Please check out all your responses and fill out all boxes marked
+        as required or. Also remember to change at least some detail if you're updating a recipe, even
         if it doesn't make sense, for example you can put 'N/A' for a unit.
       `
       this.showModal();
@@ -206,8 +211,8 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
     const _recipe = new Recipe(
       this.recipe ? this.recipe.id : '',
       this.recipeForm.value['name'],
-      this.recipeForm.value['ingredients'],
-      this.recipeForm.value['steps'],
+      this.recipeForm.value['ingredients'].map((i: IngredientLike) => new Ingredient(i.name, i.quantity, i.unit)),
+      this.recipeForm.value['steps'].map((s: StepLike, idx: number) => new Step(s.step, idx + 1)),
       this.recipeForm.value['photo'],
       this.recipeForm.value['url']
     )
@@ -222,7 +227,8 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
                 ${errors[0].message} -- Please check the recipe and try again. If the
                 problem persists, it may be an error with the database. Please try to
                 contact Ben and tell him about the problem.
-              `
+              `;
+              this.showModal();
             } else {
               this.router.navigate(['/recipes', data?.updateRecipe.recipe.id])
             }
@@ -235,8 +241,8 @@ export class RecipeFormComponent implements OnInit, OnDestroy {
                 ${errors[0].message} -- Please check the recipe and try again. If the
                 problem persists, it may be an error with the database. Please try to
                 contact Ben and tell him about the problem.
-              `
-            this.showModal();
+              `;
+              this.showModal();
             } else {
               this.router.navigate(['/recipes', data?.createRecipe.recipe.id])
             }

@@ -12,7 +12,7 @@ export class LoadingComponent implements OnInit {
   ngOnInit(): void {
     const matched = this.size.match(/(\d+\.?\d?)(\w+)/);
     if (!matched || matched.length < 3) {
-      console.error("Size must be able to be parsed by the regex /(\d+\.?\d?)(\w+)/");
+      console.error('Size must be able to be parsed by the regex /(\d+\.?\d?)(\w+)/');
       return;
     }
     // matched = [size, quantity, unit]

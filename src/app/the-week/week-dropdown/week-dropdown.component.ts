@@ -65,8 +65,10 @@ export class WeekDropdownComponent implements OnInit, OnDestroy {
           this.showModal();
           return;
         }
-        this.groupsSummary = data.me.individual.groups
-          .map(g => ({ id: g.id, name: g.name }));
+        if (data.me.individual.groups) {
+          this.groupsSummary = data.me.individual.groups
+            .map(g => ({ id: g.id, name: g.name }));
+        }
       })
 
     this.storeSubscription = this.store.select('auth')

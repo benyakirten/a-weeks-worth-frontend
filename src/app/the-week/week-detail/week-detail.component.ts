@@ -83,7 +83,7 @@ export class WeekDetailComponent implements OnInit, OnDestroy {
               this.meals = data.me.individual.meals;
               this.shoppingList = data.me.individual.shoppingList;
             } else {
-              const selectedGroup = data.me.individual.groups.find(g => g.id === p['id']);
+              const selectedGroup = data.me.individual.groups.find(g => g.id === this.groupId);
               if (!selectedGroup) {
                 this.modalText = `
                     Unable to locate group based on ID.

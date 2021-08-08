@@ -28,5 +28,4 @@ export class DefaultModalComponent implements OnInit {
       return;
     }
   }
-
 }

@@ -88,7 +88,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   ariaButtonListener(e: KeyboardEvent): void {
-    switch(e.code) {
+    switch (e.code) {
       case "Space":
         this.toggleMenuClicked();
         break;
@@ -101,11 +101,20 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   editRecipe(): void {
+    if (!this.isLoggedIn) {
+      this.modalText = 'You must be logged in to perform that action';
+      this.showModal();
+      return;
+    }
     this.router.navigate(['/recipes', 'edit', this.recipe!.id])
   }
 
   deleteRecipe(): void {
-    // Check user auth, etc.
+    if (!this.isLoggedIn) {
+      this.modalText = 'You must be logged in to perform that action';
+      this.showModal();
+      return;
+    }
     if (!this.recipe) {
       return
     }
@@ -115,8 +124,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         .subscribe(({ errors }) => {
           if (errors) {
             this.modalText = `
-              ${errors[0].message} -- A problem occurred deleting the recipe. Please
-              try again later. If the problem persists, it probably is a problem with the
+              ${errors[0].message} -- A problem occurred deleting the recipe. Please try again later. If the problem persists, it probably is a problem with the
               database. Please contact Ben and let him know what's happening.
             `
             this.showModal();

@@ -31,8 +31,10 @@ export class RecipeListComponent implements OnInit, OnDestroy {
           this.error = errors[0].message;
           return;
         }
-        this.error = undefined;
-        this.recipes = data.recipes;
+        if (data) {
+          this.error = undefined;
+          this.recipes = data.recipes;
+        }
     });
   }
 

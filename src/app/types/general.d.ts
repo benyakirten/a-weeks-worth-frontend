@@ -12,6 +12,16 @@ type ComponentProps = {
   [key in CSSProp]?: string | null | undefined;
 };
 
+type IngredientLike = {
+  name: string,
+  quantity: string,
+  unit: string
+};
+
+type StepLike = {
+  step: string
+};
+
 type TranslatedIngredient = [string, number, string];
 
 type TranslatedRecipe = {
@@ -19,7 +29,7 @@ type TranslatedRecipe = {
   image: string;
   ingredients: Array<TranslatedIngredient>;
   preparation: Array<string>;
-  error: undefined;
+  error?: any;
 }
 
 type TranslatedError = {

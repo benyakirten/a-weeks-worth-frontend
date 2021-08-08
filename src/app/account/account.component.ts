@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
@@ -10,7 +11,6 @@ import * as fromApp from 'src/app/store/app.reducer';
 import * as AuthActions from 'src/app/store/auth/auth.actions';
 
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -37,7 +37,8 @@ export class AccountComponent implements OnInit, OnDestroy {
     'Email must be an email address',
     'Email and username must be unique',
     'User will be signed out and need to reauthenticate upon successful account update'
-  ]
+  ];
+
   changePasswordRules: Array<string> = [
     `A token must be used to change your password.
     You can obtain this by requesting an email be sent
@@ -46,7 +47,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     'Password must contain letters',
     'Passwords must match',
     'Password must not be too common (easy to guess)'
-  ]
+  ];
 
   constructor(
     private store: Store<fromApp.AppState>,
@@ -56,7 +57,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.store.select('auth')
+    this.storeSub = this.store.select('auth')
       .subscribe(authState => {
         this.verified = authState.user?.verified;
         this.username = authState.user?.username;
@@ -65,7 +66,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     );
     this.route.queryParams
       .subscribe(p => {
-        console.log(p)
         if (p['passwordReset']) {
           this.passwordMode = true;
           this.passwordResetToken = p['passwordReset'];
@@ -115,6 +115,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     if (form.value['password'] !== form.value['password2']) {
       this.loading = false;
       this.error = 'Passwords do not match';
+      return;
     }
     this.authService
       .passwordReset(
@@ -132,7 +133,7 @@ export class AccountComponent implements OnInit, OnDestroy {
           this.router.navigate(['/auth']);
           return;
         } else {
-          this.error = 'An error occurred. Please try again';
+          this.error = 'An error occurred. Please try again.';
           return;
         }
       })
@@ -142,7 +143,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   private handleAccountDetailsChange(form: NgForm) {
     this.mutationSub = this.authService
       .updateDetails(form.value['email'], form.value['username'])
-      .subscribe(({ data, errors }) => {
+      .subscribe(({ errors }) => {
         if (errors) {
           this.error = errors[0].message;
           return;

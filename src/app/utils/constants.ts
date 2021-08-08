@@ -51,11 +51,11 @@ export const METRIC_FLUIDS: ConversionTable = {
   'centiliters': 10,
   'centiliter': 10,
   'cl': 10,
-  'millileters': 1,
-  'millileter': 1,
+  'milliliters': 1,
+  'milliliter': 1,
   'ml': 1
 };
-export const METRIC_FLUID_BASE_UNIT = 'millileters'
+export const METRIC_FLUID_BASE_UNIT = 'milliliters'
 
 export const IMPERIAL_FLUIDS: ConversionTable = {
   'gallons': 768,
@@ -64,6 +64,7 @@ export const IMPERIAL_FLUIDS: ConversionTable = {
   'quart': 192,
   'qt': 192,
   'cup': 48,
+  'fluid ounces': 6,
   'fluid ounce': 6,
   'fl oz': 6,
   'ounces': 6,
@@ -72,7 +73,7 @@ export const IMPERIAL_FLUIDS: ConversionTable = {
   'tablespoons': 3,
   'tablespoon': 3,
   'tbsp': 3,
-  'teaspoons': 3,
+  'teaspoons': 1,
   'teaspoon': 1,
   'tsp': 1
 };

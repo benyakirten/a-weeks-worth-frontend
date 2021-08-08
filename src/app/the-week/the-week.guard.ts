@@ -1,49 +1,53 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  RouterStateSnapshot,
+  Router
+} from '@angular/router';
 
-import { tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class TheWeekGuard implements CanActivate, CanActivateChild {
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot) {
     if (localStorage.getItem('AWW_token')) {
       return true;
     }
     return this.authService.isLoggedIn.pipe(
-      tap(isLoggedIn => {
+      map(isLoggedIn => {
         if (!isLoggedIn) {
           this.router.navigate(['/auth'], {
             queryParams: { returnUrl: state.url }
-          })
+          });
+          return false;
         }
+        return true;
       })
     );
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot) {
     if (localStorage.getItem('AWW_token')) {
       return true;
     }
     return this.authService.isLoggedIn.pipe(
-      tap(isLoggedIn => {
+      map(isLoggedIn => {
         if (!isLoggedIn) {
           this.router.navigate(['/auth'], {
             queryParams: { returnUrl: state.url }
-          })
+          });
+          return false;
         }
+        return true;
       })
     );
   }

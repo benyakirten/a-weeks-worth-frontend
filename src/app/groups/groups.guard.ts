@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  RouterStateSnapshot,
+  Router
+} from '@angular/router';
 
-import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class GroupsGuard implements CanActivate, CanActivateChild {
+@Injectable({ providedIn: 'root' })
+export class GroupsGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router
@@ -17,35 +20,17 @@ export class GroupsGuard implements CanActivate, CanActivateChild {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (localStorage.getItem('AWW_token')) {
-      return true;
-    }
+    state: RouterStateSnapshot) {
     return this.authService.isLoggedIn.pipe(
-      tap(isLoggedIn => {
+      map(isLoggedIn => {
         if (!isLoggedIn) {
           this.router.navigate(['/auth'], {
             queryParams: { returnUrl: state.url }
-          })
+          });
+          return false;
         }
+        return true;
       })
     );
   }
-  canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (localStorage.getItem('AWW_token')) {
-      return true;
-    }
-    return this.authService.isLoggedIn.pipe(
-      tap(isLoggedIn => {
-        if (!isLoggedIn) {
-          this.router.navigate(['/auth'], {
-            queryParams: { returnUrl: state.url }
-          })
-        }
-      })
-    );
-  }
-
 }

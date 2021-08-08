@@ -6,11 +6,13 @@ import * as AuthActions from './auth.actions';
 export interface State {
   user?: User;
   error?: string;
+  loading: boolean;
 };
 
 const initialState: State = {
   user: undefined,
-  error: undefined
+  error: undefined,
+  loading: false
 }
 
 const _authReducer = createReducer(
@@ -60,6 +62,14 @@ const _authReducer = createReducer(
         state.user!.refreshToken,
         true
       )
+    })
+  ),
+
+  on(
+    AuthActions.setLoading,
+    (state, action) => ({
+      ...state,
+      loading: action.loading
     })
   )
 )

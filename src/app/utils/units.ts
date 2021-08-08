@@ -61,29 +61,39 @@ export const convertRatioToNumber = (quantity: string): number | null => {
 export const simplifyUnits = (item: QuantityAndUnit): QuantityAndUnit => {
   switch (item.unit) {
     case 'milligrams':
+    case 'milligram':
     case 'mg':
-      if (item.quantity / (1000 * 1000) > 0) {
+      if (item.quantity / (1000 * 1000) >= 0.5) {
         const newQuantity = (item.quantity / (1000 * 1000)).toFixed(2);
         return {
           unit: 'kilograms',
           quantity: +newQuantity
         };
       }
+      if (item.quantity / 1000 >= 1) {
+        const newQuantity = (item.quantity / 1000).toFixed(2);
+        return {
+          unit: 'grams',
+          quantity: +newQuantity
+        };
+      }
       return item;
     case 'oz':
+    case 'ounce':
     case 'ounces':
-      if (item.quantity / 16 > 0) {
+      if (item.quantity / 16 >= 1) {
         const newQuantity = (item.quantity / 16).toFixed(2);
         return {
-          unit: 'pound',
+          unit: 'pounds',
           quantity: +newQuantity
         };
       }
       return item;
     case 'ml':
-    case 'millileters':
-      if (item.quantity / 1000 > 0) {
-        const newQuantity = (item.quantity / 16).toFixed(2);
+    case 'milliliter':
+    case 'milliliters':
+      if (item.quantity / 1000 >= 0.5) {
+        const newQuantity = (item.quantity / 1000).toFixed(2);
         return {
           unit: 'liters',
           quantity: +newQuantity
@@ -91,36 +101,37 @@ export const simplifyUnits = (item: QuantityAndUnit): QuantityAndUnit => {
       }
       return item;
     case 'tsp':
+    case 'teaspoon':
     case 'teaspoons':
-      if (item.quantity / 768 > 0) {
+      if (item.quantity / 768 >= 0.5) {
         const newQuantity = (item.quantity / 768).toFixed(2);
         return {
           unit: 'gallons',
           quantity: +newQuantity
         }
       }
-      if (item.quantity / 192 > 0) {
+      if (item.quantity / 192 >= 0.5) {
         const newQuantity = (item.quantity / 192).toFixed(2);
         return {
           unit: 'quarts',
           quantity: +newQuantity
         }
       }
-      if (item.quantity / 48 > 0) {
+      if (item.quantity / 48 >= 0.25) {
         const newQuantity = (item.quantity / 48).toFixed(2);
         return {
           unit: 'cups',
           quantity: +newQuantity
         }
       }
-      if (item.quantity / 6 > 0) {
+      if (item.quantity / 6 >= 1) {
         const newQuantity = (item.quantity / 6).toFixed(2);
         return {
           unit: 'fluid ounces',
           quantity: +newQuantity
         }
       }
-      if (item.quantity / 3 > 0) {
+      if (item.quantity / 3 >= 1) {
         const newQuantity = (item.quantity / 3).toFixed(2);
         return {
           unit: 'tablespoons',
@@ -156,13 +167,13 @@ export const changeQuantityToFractions = (quantity: number): string => {
     whole++;
   }
 
-  return `${whole > 0 ? whole + ' ' : ''}${_decimal}`;
+  return `${whole > 0 ? whole : ''}${whole > 0 && _decimal ? ' ' : ''}${_decimal}`;
 }
 
 export const convertToSmallerUnits = (item: QuantityAndUnit): QuantityAndUnit => {
   const _item = { ...item, unit: item.unit.toLowerCase().trim() };
 
-  if (_item.quantity < 0.2) {
+  if (_item.quantity < 0.2 && _item.quantity > 0) {
     // I could just do one giant switch statement and not care about
     // the units. But this is at least some sort of organization
     if (_item.unit in IMPERIAL_SOLIDS) {
@@ -183,18 +194,20 @@ export const convertToSmallerUnits = (item: QuantityAndUnit): QuantityAndUnit =>
         case 'quart':
         case 'quarts':
         case 'qt':
-          return { quantity: 32 * item.quantity, unit: 'fl oz' }
+          return { quantity: 32 * _item.quantity, unit: 'fluid ounces' };
         case 'cups':
         case 'cup':
-          return { quantity: 8 * item.quantity, unit: 'fl oz' }
+          return { quantity: 8 * _item.quantity, unit: 'fluid ounces' };
         // We can't tell if it means oz/ounce/ounces mean fluid or not
         // so we'll only go with the ones explicitly fluid for this conversion
+        case 'fluid ounces':
         case 'fluid ounce':
         case 'fl oz':
-          return { quantity: 6 * item.quantity, unit: 'teaspoon' }
-        case 'tbsp':
+          return { quantity: 6 * _item.quantity, unit: 'teaspoon' }
+        case 'tablespoons':
         case 'tablespoon':
-          return { quantity: 3 * item.quantity, unit: 'teaspoon'}
+        case 'tbsp':
+          return { quantity: 3 * _item.quantity, unit: 'teaspoon' }
         default:
           break;
       }
@@ -203,24 +216,23 @@ export const convertToSmallerUnits = (item: QuantityAndUnit): QuantityAndUnit =>
       switch (_item.unit) {
         case 'kilograms':
         case 'kilogram':
-        case 'kl':
+        case 'kg':
           return { quantity: 1000 * _item.quantity, unit: 'grams' };
         case 'hectograms':
         case 'hectogram':
-        case 'hl':
+        case 'hg':
           return { quantity: 100 * _item.quantity, unit: 'grams' };
         case 'decagrams':
         case 'decagram':
-        case 'dl':
+        case 'dg':
           return { quantity: 10 * _item.quantity, unit: 'grams' };
         case 'grams':
         case 'gram':
-        case 'l':
           return { quantity: 1000 * _item.quantity, unit: 'milligrams' };
         case 'centigrams':
         case 'centigram':
-        case 'cl':
-          return { quantity: 100 * _item.quantity, unit: 'milligrams' };
+        case 'cg':
+          return { quantity: 10 * _item.quantity, unit: 'milligrams' };
         default: break;
       }
     }
@@ -245,7 +257,7 @@ export const convertToSmallerUnits = (item: QuantityAndUnit): QuantityAndUnit =>
         case 'centiliters':
         case 'centiliter':
         case 'cl':
-          return { quantity: 100 * _item.quantity, unit: 'milliliters' };
+          return { quantity: 10 * _item.quantity, unit: 'milliliters' };
         default: break;
       }
     }

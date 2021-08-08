@@ -25,8 +25,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   loginMode: boolean = true;
   returnRoute?: string;
 
-  email: string = '';
-
   private mutationSubscription?: Subscription;
 
   rules: Array<string> = [
@@ -62,7 +60,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.error = "Form is invalid";
       return;
     }
-    if (!this.loginMode && form.form.value['password'] !== form.form.value['password2']) {
+    if (!this.loginMode && form.value['password'] !== form.value['password2']) {
       this.error = "Passwords do not match";
       return;
     }
@@ -70,10 +68,10 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.loading = true;
     if (!this.loginMode) {
       this.mutationSubscription = this.authService.register(
-        form.form.value['email'],
-        form.form.value['username'],
-        form.form.value['password'],
-        form.form.value['password2']
+        form.value['email'],
+        form.value['username'],
+        form.value['password'],
+        form.value['password2']
       ).subscribe(({ data, errors }) => {
         if (errors) {
           this.error = errors[0].message;
@@ -83,8 +81,8 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.handleSubscriptionData({
             ...data?.register,
             user: {
-              username: form.form.value['username'],
-              email: form.form.value['email'],
+              username: form.value['username'],
+              email: form.value['email'],
               verified: false
             }
           });
@@ -92,21 +90,24 @@ export class AuthComponent implements OnInit, OnDestroy {
       })
     } else {
       this.mutationSubscription = this.authService.login(
-        form.form.value['email'],
-        form.form.value['password']
-      ).subscribe(({ data }) => {
+        form.value['email'],
+        form.value['password']
+      ).subscribe(({ data, errors }) => {
+        if (errors) {
+          this.error = errors[0].message;
+          return;
+        }
         this.handleSubscriptionData(data?.tokenAuth);
       })
     }
   }
 
   private handleSubscriptionData(response?: AuthResponse) {
+    this.loading = false;
     if (!response) {
-      this.error = "Something went wrong. Please try again.";
-      this.loading = false;
+      this.error = 'Something went wrong. Please try again.';
       return;
     }
-    this.loading = false;
     if (response.errors) {
       this.error = this.authService.handleError(response.errors);
     }
