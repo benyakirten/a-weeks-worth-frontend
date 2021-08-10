@@ -186,10 +186,6 @@ export class WeekFormComponent implements OnInit, OnDestroy {
 
   consolidateShoppingList() {
     const shoppingList: Array<Ingredient> = this.weekForm.controls['shoppingList'].value;
-    const ingredientNames = shoppingList.map((ing: Ingredient) => ing.name.toLowerCase());
-    if (new Set(ingredientNames).size === ingredientNames.length) {
-      return;
-    }
     const newIngredientList: Array<Ingredient> = [];
     const newIngredientNames: Array<string> = [];
     for (let item of shoppingList) {
@@ -267,12 +263,35 @@ export class WeekFormComponent implements OnInit, OnDestroy {
     this.weekForm.setControl('shoppingList', simplifiedFormArray);
   }
 
+  resetToBlankWeek() {
+    const blankWeek = new FormArray([]);
+    for (let day in Day) {
+      blankWeek.push(
+        new FormGroup({
+          time: new FormControl('L', [Validators.required]),
+          day: new FormControl(day, [Validators.required]),
+          text: new FormControl(null),
+          recipeId: new FormControl(null)
+        })
+      );
+      blankWeek.push(
+        new FormGroup({
+          time: new FormControl('D', [Validators.required]),
+          day: new FormControl(day, [Validators.required]),
+          text: new FormControl(null),
+          recipeId: new FormControl(null)
+        })
+      );
+    }
+    this.weekForm.setControl('meals', blankWeek);
+  }
+
   get shoppingListControls() {
     return (<FormArray>this.weekForm.get('shoppingList')).controls;
   }
 
   addShoppingItem() {
-    (<FormArray>this.weekForm.get('shoppingList')).push(
+    (<FormArray>this.weekForm.get('shoppingList')).insert(0,
       new FormGroup({
         name: new FormControl(null, [Validators.required]),
         quantity: new FormControl(null, [Validators.required]),
@@ -344,15 +363,16 @@ export class WeekFormComponent implements OnInit, OnDestroy {
     if (
       !this.weekForm.valid ||
       !this.daysAndTimesUnique) {
-      this.modalTitle = 'An Error Occurred While Creating The Recipe'
-      this.modalText = `
+        this.modalTitle = 'An Error Occurred While Creating The Recipe'
+        this.modalText = `
         The form isn't correct and we can't proceed. The most likely reason
         is that the form has empty fields, hasn't been edited, or there are
         days with overlapping mealtimes. Please check the form and try again.
-      `
-      this.showModal();
-      return;
-    }
+        `
+        this.showModal();
+        return;
+      }
+    this.mutationLoading = true;
     const shoppingList = this.weekForm.value['shoppingList'];
     const meals: Array<MealInputType> = (<Array<Meal>>this.weekForm.value['meals'])
       .map(m => ({
@@ -377,6 +397,7 @@ export class WeekFormComponent implements OnInit, OnDestroy {
     errors: readonly GraphQLError[] | undefined,
     data: UpdateGroup | UpdateIndividual | null | undefined
   ) {
+    this.mutationLoading = false;
     if (errors) {
       this.error = errors[0].message;
       return;

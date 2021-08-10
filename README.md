@@ -14,8 +14,9 @@
 > 9. [Recipes Route](#recipes)
 > 10. [The Week](#the-week)
 5. [Caveats on unit testing](#caveats-on-unit-testing)
-6. [Planned Changes](#planned-changes)
-7. [Change Log](#change-log)
+6. [E2E Testing](#e2e-testing)
+7. [Planned Changes](#planned-changes)
+8. [Change Log](#change-log)
 
 # What am I looking at?
 
@@ -150,11 +151,19 @@ Unit tests took me a full week to write, especially because Angular is very opin
 * I did not test animations or enums.
 * The home (/) route, the /privacy-policy route, the /recipe blank page and /the-week blank page and the footer are only tested to see if they load in. There isn't much else to test on them.
 
+## E2E Testing
+
+This is the first time I've written E2E testing, and it was remarkably easy. I used Cypress because Angular's Protractor with Angular 12 is now deprecated, and wow, was it easy. One note: I didn't use custom commandss though it would've been easier, in order for things to be as explicit as possible. I did all tests with my backend live on my local host, and I was able to test most things. The one exception being the /account endpoint funcitonality because that relies on tokens sent by email. The actual functionality of the functions is better elaborated in unit tests, so I thought it wouldn't be productive to test it specifically in e2e tests because there is very little user interaction.
+
+To be honest, I didn't flesh out all cases for E2E testing, but I feel I covered enough, and I'm tired, really tired. At some point, I plan to update this, but it may be awhile.
+
 ## Planned changes
 Note: None of these will probably get done. I'm pretty much finished with this project other than e2e testing.
-* Add e2e testing
-* Improve queries
 * Add router transitions.
+* Improve queries/how the page looks on cell phones
+* Improve how components work
+* Add ability to invite someone to group without htem requesting access
+* Add ability to delete account
 
 ## Changelong
 * 7/31/2021: First upload
@@ -169,3 +178,9 @@ Note: None of these will probably get done. I'm pretty much finished with this p
 > * Upon consolidating ingredients in the week edit form, added compilation back into ratios on the-week edit form. E.G: .25 + .25 yields 1/2, 1.37 + 0.44 yields 1 3/4, 0.66 + 0.33 yields 1
 > * Upon consolidating ingredients in the week edit form, ingredients under 0.2 of a quantity will be automatically converted to a larger amount and a smaller unit if possible.
 * 8/8/2021: Added unit testing. Worked on the readme.
+* 8/9/2021:
+> 1. Due to feedback from my wife (real UX feedback, sweet!), adding shopping ingredients to your week's shopping list will now insert the new controls at index 0.
+> 2. Changed the prepareShoppingItem() method of week-detail slightly. Also updated tests to go along with it.
+> 3. Also, consolidateShoppingList() will no longer exit early if there are no duplicate ingredients (since that was its original purpose). It will still do unit conversion and changing quantities from ratios and back.
+> 4. Added a new button to the-week edit form: Reset All Meals. This will replace your current week's meals with blank meals for lunch and dinner for the whole week. I didn't do breakfast or other because I always eat cereal for breakfast. Tell me if you want me to change it. I also added a corresponding test.
+> 5. Added e2e tests

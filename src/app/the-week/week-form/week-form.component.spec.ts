@@ -30,6 +30,7 @@ import { RecipesService } from 'src/app/shared/services/recipes/recipes.service'
 import { WeekService } from 'src/app/shared/services/week/week.service';
 
 import { WeekFormComponent } from './week-form.component';
+import { DayKey } from 'src/app/types/graphql/individual';
 
 describe('WeekFormComponent', () => {
   let component: WeekFormComponent;
@@ -192,10 +193,19 @@ describe('WeekFormComponent', () => {
   });
 
   it('should add the appropriate items when the addMeal and addShoppingItem methods are called', () => {
+    // addShoppingItem() inserts the item at index 0
     component.addShoppingItem();
     expect(component.shoppingListControls.length).toEqual(4);
-    const addedShoppingItem = component.shoppingListControls[component.shoppingListControls.length - 1];
+    const addedShoppingItem = component.shoppingListControls[0];
     expect(addedShoppingItem.value).toEqual({ name: null, quantity: null, unit: null });
+
+    // To demonstrate the list has been unshifted
+    const firstGroupShoppingItem = group.shoppingList[0];
+    expect(component.shoppingListControls[1].value).toEqual({
+      name: firstGroupShoppingItem.name,
+      quantity: firstGroupShoppingItem.quantity,
+      unit: firstGroupShoppingItem.unit
+    });
 
     component.addMeal();
     expect(component.mealsControls.length).toEqual(4);
@@ -331,6 +341,110 @@ describe('WeekFormComponent', () => {
       name: 'Meat',
       quantity: '1',
       unit: 'pounds'
+    });
+  });
+
+  it('should replace all meals with blanks for lunch and dinner for every day of the week if the resetToBlankWeek method is called', () => {
+    component.resetToBlankWeek();
+
+    const { mealsControls } = component;
+
+    // MONDAY
+    expect(mealsControls[0].value).toEqual({
+      time: 'L',
+      day: 'MON',
+      text: null,
+      recipeId: null
+    });
+    expect(mealsControls[1].value).toEqual({
+      time: 'D',
+      day: 'MON',
+      text: null,
+      recipeId: null
+    });
+
+    // TUESDAY
+    expect(mealsControls[2].value).toEqual({
+      time: 'L',
+      day: 'TUE',
+      text: null,
+      recipeId: null
+    });
+    expect(mealsControls[3].value).toEqual({
+      time: 'D',
+      day: 'TUE',
+      text: null,
+      recipeId: null
+    });
+
+    // WEDNESDAY
+    expect(mealsControls[4].value).toEqual({
+      time: 'L',
+      day: 'WED',
+      text: null,
+      recipeId: null
+    });
+    expect(mealsControls[5].value).toEqual({
+      time: 'D',
+      day: 'WED',
+      text: null,
+      recipeId: null
+    });
+
+    // THURSDAY
+    expect(mealsControls[6].value).toEqual({
+      time: 'L',
+      day: 'THU',
+      text: null,
+      recipeId: null
+    });
+    expect(mealsControls[7].value).toEqual({
+      time: 'D',
+      day: 'THU',
+      text: null,
+      recipeId: null
+    });
+
+    // FRIDAY
+    expect(mealsControls[8].value).toEqual({
+      time: 'L',
+      day: 'FRI',
+      text: null,
+      recipeId: null
+    });
+    expect(mealsControls[9].value).toEqual({
+      time: 'D',
+      day: 'FRI',
+      text: null,
+      recipeId: null
+    });
+
+    // SATURDAY
+    expect(mealsControls[10].value).toEqual({
+      time: 'L',
+      day: 'SAT',
+      text: null,
+      recipeId: null
+    });
+    expect(mealsControls[11].value).toEqual({
+      time: 'D',
+      day: 'SAT',
+      text: null,
+      recipeId: null
+    });
+
+    // SUNDAY
+    expect(mealsControls[12].value).toEqual({
+      time: 'L',
+      day: 'SUN',
+      text: null,
+      recipeId: null
+    });
+    expect(mealsControls[13].value).toEqual({
+      time: 'D',
+      day: 'SUN',
+      text: null,
+      recipeId: null
     });
   });
 });

@@ -130,6 +130,14 @@
             >
               Delete All Meals
             </app-button>
+            <app-button
+              type="button"
+              (click)="resetToBlankWeek()"
+              [disabled]="mutationLoading"
+              margin="0 2rem"
+            >
+              Reset All Meals
+            </app-button>
           </div>
         </div>
         <div class="meals__content">
@@ -141,10 +149,10 @@
             >
               <div class="meals__row">
                 <div class="meals__content__control-group">
-                  <label for="'meal-weekday' + i">Day of the week:</label>
+                  <label for="'meal-weekday-' + i">Day of the week:</label>
                   <select
-                    [id]="'meal-weekday' + i"
-                    [name]="'meal-weekday' + i"
+                    [id]="'meal-weekday-' + i"
+                    [name]="'meal-weekday-' + i"
                     formControlName="day"
                   >
                     <option *ngFor="let key of weekdayKey" [ngValue]="key">
@@ -153,10 +161,10 @@
                   </select>
                 </div>
                 <div class="meals__content__control-group">
-                  <label for="'meal-time' + i">Meal time</label>
+                  <label for="'meal-time-' + i">Meal time</label>
                   <select
-                    [id]="'meal-time' + i"
-                    [name]="'meal-time' + i"
+                    [id]="'meal-time-' + i"
+                    [name]="'meal-time-' + i"
                     formControlName="time"
                   >
                     <option *ngFor="let key of timeKey" [ngValue]="key">
@@ -165,10 +173,10 @@
                   </select>
                 </div>
                 <div class="meals__content__control-group">
-                  <label for="'meal-recipe' + i">Recipe:</label>
+                  <label for="'meal-recipe-' + i">Recipe:</label>
                   <select
-                    [id]="'meal-recipe' + i"
-                    [name]="'meal-recipe' + i"
+                    [id]="'meal-recipe-' + i"
+                    [name]="'meal-recipe-' + i"
                     formControlName="recipeId"
                   >
                     <option [ngValue]="null">

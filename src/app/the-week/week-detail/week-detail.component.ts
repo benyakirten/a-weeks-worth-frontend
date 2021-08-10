@@ -134,8 +134,18 @@ export class WeekDetailComponent implements OnInit, OnDestroy {
 
   prepareShoppingItem(name: string, quantity: string, unit: string): string {
     if (unit.toLowerCase().trim() === 'n/a') {
-      return `${name}, ${quantity}`;
+      if (quantity.toLowerCase().trim() === 'n/a') {
+        // Both unit and quantity are n/a
+        return name;
+      }
+      // Just unit is n/a
+      return `${quantity} ${name}`;
     }
+    // Just quantity is n/a
+    if (quantity.toLowerCase().trim() === 'n/a') {
+      return `${unit} of ${name}`;
+    }
+    // Everything is normal
     return `${quantity} ${unit} of ${name}`;
   }
 

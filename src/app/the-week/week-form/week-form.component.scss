@@ -100,6 +100,19 @@ section {
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
+
+    &__buttons {
+      @include respond(tab-port) {
+        display: flex;
+        flex-direction: column;
+
+        app-button {
+          &:not(:first-child) {
+            margin-top: 1rem;
+          }
+        }
+      }
+    }
   }
   &__row {
     display: flex;

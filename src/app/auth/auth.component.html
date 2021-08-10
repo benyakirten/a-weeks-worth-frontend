@@ -1,12 +1,12 @@
 <article>
   <div class="form-title">
-    <h2>
+    <h1>
       <span>Login or Register</span>
       <app-default-hover-toolbar width="35rem">
         Switch between the two modes by clicking to the right
         or the button at the bottom labeled 'I need to...'
       </app-default-hover-toolbar>
-    </h2>
+    </h1>
     <div class="mode-buttons">
       <button (click)="loginMode ? null : alternateMode()" [class.active]="loginMode">Login</button>
       <button (click)="loginMode ? alternateMode() : null" [class.active]="!loginMode">Register</button>

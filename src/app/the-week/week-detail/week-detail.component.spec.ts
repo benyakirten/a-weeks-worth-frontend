@@ -196,4 +196,23 @@ describe('WeekDetailComponent', () => {
     mealsList = fixture.debugElement.query(By.css('.day-mode')).queryAll(By.css('li'));
     expect(mealsList.length).toEqual(group.meals.filter(m => m.day === 'TUE').length);
   });
+
+  it('should prepare the output correctly when calling the prepareShoppingItem method', () => {
+    const unitQuantityAndName = { name: 'Meat',quantity:  '1/4', unit: 'lb' };
+    const quantityAndName = { name: 'Eggs', quantity: '5', unit: 'n/a' };
+    const unitAndName = { name: 'Butter', quantity: 'n/a', unit: 'Pound' };
+    const onlyName = { name: 'Jack cheese', quantity: 'n/a', unit: 'n/a' };
+
+    expect(component.prepareShoppingItem(unitQuantityAndName.name, unitQuantityAndName.quantity, unitQuantityAndName.unit))
+      .toEqual(`${unitQuantityAndName.quantity} ${unitQuantityAndName.unit} of ${unitQuantityAndName.name}`);
+
+    expect(component.prepareShoppingItem(quantityAndName.name, quantityAndName.quantity, quantityAndName.unit))
+      .toEqual(`${quantityAndName.quantity} ${quantityAndName.name}`);
+
+    expect(component.prepareShoppingItem(unitAndName.name, unitAndName.quantity, unitAndName.unit))
+      .toEqual(`${unitAndName.unit} of ${unitAndName.name}`);
+
+    expect(component.prepareShoppingItem(onlyName.name, onlyName.quantity, onlyName.unit))
+      .toEqual(`${onlyName.name}`);
+  });
 });

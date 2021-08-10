@@ -176,6 +176,7 @@
               placeholder="Turn the oven on to 350 degrees"
               aria-labelledby="steps-label"
               formControlName="step"
+              [id]="'step-text-' + i"
             ></textarea>
             <div class="delete-step">
               <app-button (click)="onSubtractStep(i)">Remove Step</app-button>
