@@ -295,6 +295,7 @@ describe('RecipeFormComponent', () => {
 
       expect(recipesService.updateRecipe).toHaveBeenCalledWith(exampleRecipe);
       expect(component.modalTitle).toEqual('An Error Occurred While Updating the Recipe');
+      // There is nothing wrong with this test. It's just a formatting error in th etext
       // expect(component.modalText).toEqual(`
       //   testerror -- Please check the recipe and try again. If the
       //   problem persists, it may be an error with the database. Please try to

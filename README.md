@@ -158,11 +158,12 @@ This is the first time I've written E2E testing, and it was remarkably easy. I u
 To be honest, I didn't flesh out all cases for E2E testing, but I feel I covered enough, and I'm tired, really tired. At some point, I plan to update this, but it may be awhile.
 
 ## Planned changes
-Note: None of these will probably get done. I'm pretty much finished with this project other than e2e testing.
+Note: None of these will probably get done. I'm pretty much finished with this project. These are ideas of what could be improved if I ever step back into the project.
+* Add Angular Universal
 * Add router transitions.
 * Improve queries/how the page looks on cell phones
 * Improve how components work
-* Add ability to invite someone to group without htem requesting access
+* Add ability to invite someone to group without them requesting access
 * Add ability to delete account
 
 ## Changelong
@@ -184,3 +185,4 @@ Note: None of these will probably get done. I'm pretty much finished with this p
 > 3. Also, consolidateShoppingList() will no longer exit early if there are no duplicate ingredients (since that was its original purpose). It will still do unit conversion and changing quantities from ratios and back.
 > 4. Added a new button to the-week edit form: Reset All Meals. This will replace your current week's meals with blank meals for lunch and dinner for the whole week. I didn't do breakfast or other because I always eat cereal for breakfast. Tell me if you want me to change it. I also added a corresponding test.
 > 5. Added e2e tests
+* 10/12/2021: Added CI/CD with Travis

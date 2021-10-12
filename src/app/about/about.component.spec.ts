@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgForm } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -11,7 +11,6 @@ import * as fromApp from 'src/app/store/app.reducer';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 import { AboutComponent } from './about.component';
-import { Observable } from '@apollo/client/utilities';
 import { of } from 'rxjs';
 
 describe('AboutComponent', () => {
