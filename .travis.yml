@@ -13,7 +13,7 @@ install:
   - npm install
 
 script:
-  - npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
+  - npm run test -- --watch=false --progress=false --browsers=ChromeHeadless
 
 deploy:
   provider: firebase

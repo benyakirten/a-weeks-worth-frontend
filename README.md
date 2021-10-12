@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/benyakirten/a-weeks-worth-frontend.svg?branch=main)](https://app.travis-ci.com/benyakirten/a-weeks-worth-frontend)
+
 # Table of Contents
 1. [What am I looking at?](#what-am-i-looking-at?)
 2. [How to run the repository](#how-to-run-the-repository)
