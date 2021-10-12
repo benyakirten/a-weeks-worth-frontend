@@ -14,8 +14,3 @@ install:
 
 script:
   - npm run test -- --watch=false --progress=false --browsers=ChromeHeadless
-
-deploy:
-  provider: firebase
-  token:
-    secure: $FB_TOKEN
