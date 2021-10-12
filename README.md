@@ -187,4 +187,4 @@ Note: None of these will probably get done. I'm pretty much finished with this p
 > 3. Also, consolidateShoppingList() will no longer exit early if there are no duplicate ingredients (since that was its original purpose). It will still do unit conversion and changing quantities from ratios and back.
 > 4. Added a new button to the-week edit form: Reset All Meals. This will replace your current week's meals with blank meals for lunch and dinner for the whole week. I didn't do breakfast or other because I always eat cereal for breakfast. Tell me if you want me to change it. I also added a corresponding test.
 > 5. Added e2e tests
-* 10/12/2021: Added CI/CD with Travis
+* 10/12/2021: Added CI/CD with Travis, now automatically deploys to github
