@@ -188,3 +188,4 @@ Note: None of these will probably get done. I'm pretty much finished with this p
 > 4. Added a new button to the-week edit form: Reset All Meals. This will replace your current week's meals with blank meals for lunch and dinner for the whole week. I didn't do breakfast or other because I always eat cereal for breakfast. Tell me if you want me to change it. I also added a corresponding test.
 > 5. Added e2e tests
 * 10/12/2021: Added CI/CD with Travis
+* 12/6/2021: Changed CI/CD to GitHub actions
